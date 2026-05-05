@@ -4,12 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>مخطط المذاكرة | Study Planner</title>
+<!-- Fast mobile build: removed injected antivirus script and delayed background startup tasks -->
 <meta name="theme-color" content="#534AB7">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="مخطط المذاكرة">
 <link rel="manifest" href='data:application/manifest+json,{"name":"%D9%85%D8%AE%D8%B7%D8%B7%20%D8%A7%D9%84%D9%85%D8%B0%D8%A7%D9%83%D8%B1%D8%A9","short_name":"%D8%A7%D9%84%D9%85%D8%AE%D8%B7%D8%B7","start_url":".","display":"standalone","background_color":"%23f8f7f4","theme_color":"%23534AB7","lang":"ar","dir":"rtl","icons":[{"src":"data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20192%20192%27%3E%3Crect%20width=%27192%27%20height=%27192%27%20rx=%2744%27%20fill=%27%23534AB7%27/%3E%3Cpath%20d=%27M48%2050h96a8%208%200%200%201%208%208v76a8%208%200%200%201-8%208H48a8%208%200%200%201-8-8V58a8%208%200%200%201%208-8Zm0%2028h96M68%2036v28M124%2036v28M68%2094h22v22H68Zm34%200h22v22h-22Z%27%20fill=%27none%27%20stroke=%27white%27%20stroke-width=%2712%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27/%3E%3C/svg%3E","sizes":"192x192","type":"image/svg+xml","purpose":"any maskable"},{"src":"data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20512%20512%27%3E%3Crect%20width=%27512%27%20height=%27512%27%20rx=%27110%27%20fill=%27%23534AB7%27/%3E%3Cpath%20d=%27M128%20134h256c17.7%200%2032%2014.3%2032%2032v202c0%2017.7-14.3%2032-32%2032H128c-17.7%200-32-14.3-32-32V166c0-17.7%2014.3-32%2032-32Zm0%2074h256M182%2098v74M330%2098v74M182%20250h58v58h-58Zm90%200h58v58h-58Z%27%20fill=%27none%27%20stroke=%27white%27%20stroke-width=%2732%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27/%3E%3C/svg%3E","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}]}' />
-<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=mL-b1NAC_j-84SJR1sOdWMsBt5IgIDd2-X2rIiKxBJnHCPznyNDb1UhYl5LKprHcSG9mwHsFI5DR3Hlua9JOg6cXCr7fXxSAhyb7FTp4qJCvwOGwyBp68OWUVRESHzEW5-LdPXuC2xCLkmy5e_oZ0UqHZecs1RKMq25PevGXURUg9P8pTB72B50NvzIl-u7N-YrZ4KX82JFiuJYbZY0v6peADR70OTg9L1maNxL-ygdo6Rzs01os4sOq2bMtsSmDNl8MuD3UuevhDJjfQ3ABZw" charset="UTF-8"></script><style>
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=60OxTaiWfw6YzwKMWDBjJJN95BdTeh4Yn-_lC4N-oj1Xck7qd-_rRAF75Icl_8hPpRyaN-cgJ-NtH_PClwr5aF8bXa7ed37zI1dzabYq-oiq4_CAScz2XZi98bca1ik7aY4X1d1rcQlD8cgLEth6LMNCn4lfh_gqxiaU5t097HNr1wldRkqxHVV5FKPh5TMz5WdfekaJP3f1hwMk_Q431y147Cv3YNWaS8XwmgrVBY4UZkg0cBzaczEbsasPVKLf7L6Xm5TT_BofE5ImNK3Ilg" charset="UTF-8"></script><style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#f8f7f4;--surface:#fff;--border:rgba(0,0,0,.1);
@@ -411,8 +412,6 @@ html[data-theme="dark"] .chat-msg.bot .markdown-body code{background:rgba(255,25
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
 <script>
 const SK='study_planner_v2';
 const NOTIFY_KEY='notified_v1';
@@ -1695,11 +1694,17 @@ applyLangToDocument();
 load();
 renderDash();
 applyLangToDocument();
-(async()=>{
-  await registerInlinePWA();
-  await requestNotificationsIfNeeded();
-  await checkNotifications();
-})();
+function runBackgroundStartupTasks(){
+  registerInlinePWA()
+    .then(()=>requestNotificationsIfNeeded())
+    .then(()=>checkNotifications())
+    .catch(()=>{});
+}
+if('requestIdleCallback' in window){
+  requestIdleCallback(runBackgroundStartupTasks,{timeout:4000});
+}else{
+  setTimeout(runBackgroundStartupTasks,2500);
+}
 </script>
 </body>
 </html>
