@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>مخطط المذاكرة | Study Planner</title>
+<meta name="theme-color" content="#534AB7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="مخطط المذاكرة">
+<link rel="manifest" href='data:application/manifest+json,{"name":"%D9%85%D8%AE%D8%B7%D8%B7%20%D8%A7%D9%84%D9%85%D8%B0%D8%A7%D9%83%D8%B1%D8%A9","short_name":"%D8%A7%D9%84%D9%85%D8%AE%D8%B7%D8%B7","start_url":".","display":"standalone","background_color":"%23f8f7f4","theme_color":"%23534AB7","lang":"ar","dir":"rtl","icons":[{"src":"data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20192%20192%27%3E%3Crect%20width=%27192%27%20height=%27192%27%20rx=%2744%27%20fill=%27%23534AB7%27/%3E%3Cpath%20d=%27M48%2050h96a8%208%200%200%201%208%208v76a8%208%200%200%201-8%208H48a8%208%200%200%201-8-8V58a8%208%200%200%201%208-8Zm0%2028h96M68%2036v28M124%2036v28M68%2094h22v22H68Zm34%200h22v22h-22Z%27%20fill=%27none%27%20stroke=%27white%27%20stroke-width=%2712%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27/%3E%3C/svg%3E","sizes":"192x192","type":"image/svg+xml","purpose":"any maskable"},{"src":"data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20512%20512%27%3E%3Crect%20width=%27512%27%20height=%27512%27%20rx=%27110%27%20fill=%27%23534AB7%27/%3E%3Cpath%20d=%27M128%20134h256c17.7%200%2032%2014.3%2032%2032v202c0%2017.7-14.3%2032-32%2032H128c-17.7%200-32-14.3-32-32V166c0-17.7%2014.3-32%2032-32Zm0%2074h256M182%2098v74M330%2098v74M182%20250h58v58h-58Zm90%200h58v58h-58Z%27%20fill=%27none%27%20stroke=%27white%27%20stroke-width=%2732%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27/%3E%3C/svg%3E","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}]}' />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f8f7f4;--surface:#fff;--border:rgba(0,0,0,.1);
+  --text:#1a1a1a;--text2:#666;--text3:#999;
+  --accent:#534AB7;--accent-l:#EEEDFE;
+  --danger:#E24B4A;--danger-l:#FCEBEB;
+  --warn:#EF9F27;--warn-l:#FAEEDA;
+  --ok:#1D9E75;--ok-l:#E1F5EE;
+  --r:12px;--rs:8px;
+  --row-h:68px;
+  --color-primary:#534AB7;
+  --priority-high:#dc2626;
+  --priority-med:#d97706;
+  --priority-low:#6b7280;
+  --grade-good:#16a34a;
+  --grade-ok:#d97706;
+  --grade-low:#dc2626;
+}
+:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px}
+.chip{display:inline-block;font-size:11px;padding:2px 9px;border-radius:999px;font-weight:600;margin-inline-start:6px;color:#fff}
+.chip--neutral{background:#6b7280}
+.chip--grade-good{background:var(--grade-good)}
+.chip--grade-ok{background:var(--grade-ok)}
+.chip--grade-low{background:var(--grade-low)}
+.chip--prio-high{background:var(--priority-high)}
+.chip--prio-med{background:var(--priority-med)}
+.chip--prio-low{background:var(--priority-low)}
+.lang-toggle{background:var(--accent-l);color:var(--accent);border:1px solid var(--accent);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-chat{position:fixed;inset-inline-start:1.25rem;inset-block-end:5rem;width:52px;height:52px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:90;box-shadow:0 4px 16px rgba(83,74,183,.4)}
+.fab{inset-inline-end:1.25rem !important;inset-block-end:5rem !important;inset-inline-start:auto !important;left:auto !important;right:auto !important;bottom:auto !important}
+.sched-hint{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--accent-l);color:var(--accent);border:1px solid var(--accent);border-radius:var(--rs);padding:8px 12px;margin-bottom:10px;font-size:13px}
+.sched-hint button{background:transparent;border:none;color:var(--accent);font-size:18px;cursor:pointer;padding:0 4px}
+.fab-menu-disabled{opacity:.45;pointer-events:none;position:relative}
+.empty-card{text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:32px 20px;margin:24px auto;max-width:460px}
+.empty-card h3{font-size:18px;font-weight:700;margin-bottom:8px;color:var(--text)}
+.empty-card p{color:var(--text2);font-size:14px;margin-bottom:18px;line-height:1.6}
+.chat-panel{position:fixed;background:var(--surface);z-index:250;display:flex;flex-direction:column;box-shadow:0 -8px 32px rgba(0,0,0,.18)}
+@media(max-width:767px){.chat-panel{inset-inline:0;inset-block-end:0;height:80vh;border-radius:20px 20px 0 0}}
+@media(min-width:768px){.chat-panel{inset-inline-start:0;inset-block:0;width:400px;height:100vh}}
+.chat-panel.hidden{display:none}
+.chat-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border);gap:8px}
+.chat-header h3{font-size:15px;font-weight:600}
+.chat-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.chat-msg{max-width:85%;padding:10px 12px;border-radius:14px;font-size:14px;line-height:1.5;word-wrap:break-word}
+.chat-msg.user{align-self:flex-end;background:var(--accent);color:#fff;border-end-end-radius:4px}
+.chat-msg.bot{align-self:flex-start;background:var(--bg);border:1px solid var(--border);border-end-start-radius:4px}
+.chat-msg.bot .markdown-body p{margin:4px 0}
+.chat-msg.bot .markdown-body code{background:rgba(0,0,0,.06);padding:1px 5px;border-radius:4px;font-size:12px}
+.chat-msg.bot .markdown-body ul,.chat-msg.bot .markdown-body ol{padding-inline-start:20px;margin:6px 0}
+.chat-typing{display:inline-flex;gap:4px;align-items:center}
+.chat-typing span{width:6px;height:6px;border-radius:50%;background:var(--text3);animation:tdot 1.2s infinite}
+.chat-typing span:nth-child(2){animation-delay:.15s}.chat-typing span:nth-child(3){animation-delay:.3s}
+@keyframes tdot{0%,80%,100%{opacity:.3;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+.chat-input-row{display:flex;gap:8px;padding:12px;border-top:1px solid var(--border)}
+.chat-input-row input{flex:1;padding:10px 12px;border:1px solid var(--border);border-radius:var(--rs);font-size:14px;font-family:inherit;background:var(--bg);color:var(--text)}
+.chat-warn{background:var(--warn-l);color:#854F0B;font-size:12px;padding:8px 12px;border-bottom:1px solid #fac775}
+.chat-error{background:var(--danger-l);color:var(--danger);font-size:13px;padding:10px 12px;text-align:center}
+.gemini-key-row{display:flex;gap:6px;align-items:center}
+.gemini-key-row input{flex:1}
+[dir="ltr"] .topbar-title,[dir="ltr"] .day-name,[dir="ltr"] .sname,[dir="ltr"] .modal-title,[dir="ltr"] .fl,[dir="ltr"] .slabel,[dir="ltr"] .empty-card,[dir="ltr"] .card-title,[dir="ltr"] .stat-label,[dir="ltr"] .tname,[dir="ltr"] .tmeta,[dir="ltr"] .empty,[dir="ltr"] .muted,[dir="ltr"] .chat-msg,[dir="ltr"] .alert,[dir="ltr"] .toast,[dir="ltr"] .fi,[dir="ltr"] .fsel{direction:ltr;text-align:start}
+
+html,body{height:100%}
+body{font-family:-apple-system,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;direction:rtl;-webkit-tap-highlight-color:transparent}
+.shell{max-width:1320px;margin:0 auto;padding-bottom:92px}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 20px;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between}
+.topbar-title{font-size:17px;font-weight:600}
+.topbar-sub{font-size:11px;color:var(--text2);margin-top:1px}
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:1320px;background:var(--surface);border-top:1px solid var(--border);display:flex;padding:8px 0 12px;z-index:100;backdrop-filter:blur(10px)}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px;border:none;background:none;color:var(--text3);font-size:10px;transition:color .15s;font-family:inherit}
+.ni.active{color:var(--accent)}
+.ni svg{width:22px;height:22px}
+.page{display:none;padding:18px;opacity:0;transform:translateY(6px)}
+.page.active{display:block;animation:pageIn .15s ease forwards}
+@keyframes pageIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);padding:16px;margin-bottom:12px}
+.card-title{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:12px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--rs);padding:12px;text-align:center}
+.stat-val{font-size:26px;font-weight:700;color:var(--text)}
+.stat-label{font-size:11px;color:var(--text2);margin-top:2px}
+.alert{border-radius:var(--rs);padding:10px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px;font-size:13px}
+.al-d{background:var(--danger-l);color:#7a1212;border:1px solid #f7c1c1}
+.al-w{background:var(--warn-l);color:#6b3a0a;border:1px solid #fac775}
+.adot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.today-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.today-item:last-child{border-bottom:none}
+.tcolor{width:4px;height:44px;border-radius:2px;flex-shrink:0}
+.tinfo{flex:1;min-width:0}
+.tname{font-size:14px;font-weight:500}
+.tmeta{font-size:12px;color:var(--text2);margin-top:2px}
+.ttime{font-size:12px;color:var(--text3);direction:ltr;text-align:left;white-space:nowrap}
+.badge{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500;white-space:nowrap}
+.bd{background:var(--danger-l);color:var(--danger)}
+.bw{background:var(--warn-l);color:#b45309}
+.bs{background:var(--ok-l);color:var(--ok)}
+.bp{background:var(--accent-l);color:var(--accent)}
+.week-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:10px}
+.wbtn{background:var(--surface);border:1px solid var(--border);border-radius:var(--rs);padding:11px 22px;cursor:pointer;font-size:16px;color:var(--text);font-family:inherit}
+.wlabel{font-size:18px;font-weight:700;text-align:center;flex:1;line-height:1.55}
+.cal-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:10px}
+.sched-board{display:grid;grid-template-columns:84px repeat(7,minmax(165px,1fr));gap:12px;min-width:1280px;align-items:start}
+.sched-head-spacer{height:112px}
+.day-head{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px 12px 10px;min-height:112px}
+.day-head.tod{border-color:var(--accent);box-shadow:0 0 0 1.5px var(--accent) inset}
+.day-name{font-size:16px;font-weight:800;text-align:center;color:var(--text)}
+.day-date{font-size:14px;color:var(--text2);text-align:center;margin-top:5px;line-height:1.5}
+.date-g{color:var(--text2)}
+.date-h{color:var(--accent);font-weight:600;margin-top:2px}
+.day-pills{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-top:8px;min-height:22px}
+.day-pill{font-size:12px;padding:4px 10px;border-radius:999px;line-height:1.4;max-width:145px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.day-pill.assign{background:var(--warn-l);color:#854F0B;border:1px solid #fac775}
+.time-col{position:relative;height:calc(var(--row-h) * 12);margin-top:4px}
+.time-line{position:absolute;left:0;right:0;height:1px;background:#d8d8dd}
+.tlabel{position:absolute;right:0;transform:translateY(-50%);font-size:14px;color:var(--text2);direction:ltr;padding-inline-end:9px;font-weight:700;white-space:nowrap}
+.day-track{position:relative;height:calc(var(--row-h) * 12);border:1px solid var(--border);border-radius:14px;background:
+  repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--row-h) - 1px), rgba(0,0,0,.095) calc(var(--row-h) - 1px), rgba(0,0,0,.095) var(--row-h)),
+  linear-gradient(180deg,#fff,#fbfbfc);overflow:hidden}
+.day-track.tod{box-shadow:0 0 0 1.5px var(--accent) inset}
+.sblock{position:absolute;left:10px;right:10px;border-radius:12px;padding:9px 10px;font-size:14px;line-height:1.4;overflow:hidden;font-weight:700}
+.sblock.class{border:1px solid transparent;color:#111}
+.sblock.exam{background:#FCEBEB;color:#A32D2D;border:1px solid #f3b6b6;z-index:3}
+.sblock.study{background:rgba(83,74,183,.06);color:var(--accent);border:1.5px dashed var(--accent);z-index:2}
+.sblock.break{background:#f4f4f5;color:#52525b;border:1px solid #d4d4d8;z-index:2}
+.sblock-time{font-size:12px;opacity:.92;margin-top:5px;direction:ltr;text-align:left;font-weight:600}
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px}
+.sec-title{font-size:16px;font-weight:600}
+.add-btn{background:var(--accent-l);color:var(--accent);border:none;border-radius:var(--rs);padding:6px 12px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit}
+.empty{text-align:center;padding:36px 16px;color:var(--text3);font-size:14px}
+.empty-icon{font-size:38px;margin-bottom:8px}
+.subj-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px}
+.subj-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+.sdot{width:14px;height:14px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.sinfo{flex:1;min-width:0}
+.sname{font-size:15px;font-weight:600}
+.sgrade{font-size:12px;color:var(--text2);margin-top:2px}
+.stars{display:flex;gap:3px;align-items:center}
+.star{width:11px;height:11px;border-radius:50%}
+.son{background:var(--warn)}
+.soff{background:#e5e5e5}
+.prog-wrap{height:6px;background:#e5e5e5;border-radius:999px;overflow:hidden;margin-top:6px}
+.prog-bar{height:100%;border-radius:999px}
+.comp-list{display:grid;gap:8px}
+.comp-row{display:grid;grid-template-columns:minmax(70px,1fr) minmax(62px,72px) auto;gap:8px;align-items:center}
+.comp-name{font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.comp-meter{height:5px;background:#ececec;border-radius:999px;overflow:hidden}
+.comp-fill{height:100%;border-radius:999px}
+.comp-stack{display:grid;gap:4px}
+.comp-input{width:72px;padding:6px 8px;border:1px solid var(--border);border-radius:8px;font-size:12px;text-align:center;background:var(--bg);color:var(--text);font-family:inherit}
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:flex-end;justify-content:center}
+.modal-ov.open{display:flex}
+.modal{background:var(--surface);border-radius:20px 20px 0 0;padding:20px;width:100%;max-width:900px;max-height:88vh;overflow-y:auto;animation:sU .2s ease;position:relative}
+.modal::before{content:'';display:block;width:44px;height:5px;border-radius:999px;background:#d8d8d8;margin:0 auto 14px}
+@keyframes sU{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-title{font-size:17px;font-weight:600;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.mcls{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text2);padding:4px;line-height:1}
+.fg{margin-bottom:14px}
+.fl{font-size:13px;font-weight:500;margin-bottom:6px;display:block;color:var(--text2)}
+.fi,.fsel{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--rs);font-size:14px;color:var(--text);background:var(--bg);direction:rtl;font-family:inherit}
+.date-help{font-size:11px;color:var(--text3);margin-top:5px;line-height:1.4}
+.fi:focus,.fsel:focus,.comp-input:focus,.ti:focus{outline:none;border-color:var(--accent)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{padding:11px 20px;border-radius:var(--rs);font-size:14px;font-weight:500;cursor:pointer;border:none;font-family:inherit;transition:opacity .15s,transform .12s}
+.btn:hover{opacity:.88}
+.btn-p{background:var(--accent);color:#fff}
+.btn-s{background:var(--bg);color:var(--text);border:1px solid var(--border)}
+.btn-d{background:var(--danger-l);color:var(--danger)}
+.btn-f{width:100%}
+.btn-row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.fab{position:fixed;bottom:76px;left:20px;width:52px;height:52px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:26px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:90;box-shadow:0 4px 16px rgba(83,74,183,.4);transition:transform .15s}
+.fab:hover{transform:scale(1.05)}
+.fab:active{transform:scale(.95)}
+.cgrid{display:flex;gap:8px;flex-wrap:wrap}
+.copt{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:transform .15s}
+.copt:hover{transform:scale(1.15)}
+.copt.sel{border-color:var(--text)}
+.gc-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border)}
+.gc-row:last-child{border-bottom:none}
+.mini{width:54px;padding:5px 6px;border:1px solid var(--border);border-radius:6px;font-size:13px;text-align:center;background:var(--bg);color:var(--text)}
+.days-grid{display:flex;gap:5px;flex-wrap:wrap}
+.dchip{padding:5px 9px;border-radius:20px;font-size:12px;cursor:pointer;border:1px solid var(--border);background:var(--bg);color:var(--text2);transition:all .15s}
+.dchip.sel{background:var(--accent);color:#fff;border-color:var(--accent)}
+.srow{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border);gap:10px}
+.srow:last-child{border-bottom:none}
+.slabel{font-size:14px}
+.ti{padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-size:14px;background:var(--bg);color:var(--text);direction:ltr;font-family:inherit}
+.del-btn{background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px;padding:4px;line-height:1}
+.del-btn:hover{color:var(--danger)}
+.ci{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;gap:10px}
+.ci:last-child{border-bottom:none}
+.kv{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.kv:last-child{border-bottom:none}
+.gpa-card{background:linear-gradient(135deg,var(--accent) 0%,#6b61d8 100%);color:#fff;border:none}
+.gpa-grid{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+.gpa-val{font-size:30px;font-weight:800}
+.gpa-sub{font-size:12px;opacity:.85}
+.inline-actions{display:flex;gap:8px;flex-wrap:wrap}
+.muted{color:var(--text3);font-size:12px}
+.toast-wrap{position:fixed;left:0;right:0;bottom:94px;display:flex;flex-direction:column;align-items:center;gap:8px;z-index:300;pointer-events:none;padding:0 16px}
+.toast{min-width:220px;max-width:520px;background:var(--surface);border:1px solid var(--border);box-shadow:0 8px 24px rgba(0,0,0,.12);border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:10px;transform:translateY(14px);opacity:0;animation:toastIn .18s ease forwards}
+.toast.danger{border-color:#f2b7b7;background:var(--danger-l);color:#7a1212}
+.toast.info{border-color:#d6d4fb;background:var(--accent-l);color:var(--accent)}
+.toast.ok{border-color:#c6eadc;background:var(--ok-l);color:var(--ok)}
+.toast.hide{animation:toastOut .18s ease forwards}
+.toast-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;background:currentColor}
+@keyframes toastIn{to{opacity:1;transform:translateY(0)}}
+@keyframes toastOut{to{opacity:0;transform:translateY(14px)}}
+input[type=file]{display:none}
+@media(max-width:640px){
+  .frow,.comp-row{grid-template-columns:1fr}
+  .comp-input{width:100%}
+  .srow,.kv{align-items:flex-start;flex-direction:column}
+}
+@media(max-width:500px){
+  .btn:active,.subj-card:active,.add-btn:active,.wbtn:active{transform:scale(.97)}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topbar">
+    <div>
+      <div class="topbar-title" id="page-title">لوحة التحكم</div>
+      <div class="topbar-sub" id="today-date"></div>
+    </div>
+    <button class="lang-toggle" id="lang-toggle" onclick="toggleLang()" aria-label="Language">EN</button>
+  </div>
+  <div class="page active" id="pg-dashboard"></div>
+  <div class="page" id="pg-schedule"></div>
+  <div class="page" id="pg-subjects"></div>
+  <div class="page" id="pg-settings"></div>
+  <nav class="bnav">
+    <button class="ni active" onclick="nav('dashboard')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      لوحة التحكم
+    </button>
+    <button class="ni" onclick="nav('schedule')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      الجدول
+    </button>
+    <button class="ni" onclick="nav('subjects')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+      المواد
+    </button>
+    <button class="ni" onclick="nav('settings')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      الإعدادات
+    </button>
+  </nav>
+  <button class="fab" onclick="openFAB()">+</button>
+</div>
+<button class="btn-chat" id="btn-chat" onclick="openChat()" aria-label="Chat" title="">💬</button>
+<div class="chat-panel hidden" id="chat-panel" role="dialog">
+  <div class="chat-header">
+    <h3 id="chat-title">Study Assistant</h3>
+    <div style="display:flex;gap:6px">
+      <button class="btn btn-s" id="chat-clear-btn" onclick="clearChat()" style="padding:4px 10px;font-size:12px"></button>
+      <button class="mcls" onclick="closeChat()" aria-label="close">✕</button>
+    </div>
+  </div>
+  <div id="chat-warn-slot"></div>
+  <div class="chat-body" id="chat-body"></div>
+  <form class="chat-input-row" id="chat-form" onsubmit="event.preventDefault();sendChat()">
+    <input type="text" id="chat-input" autocomplete="off"><button type="submit" class="btn btn-p" id="chat-send-btn"></button>
+  </form>
+</div>
+<div class="toast-wrap" id="toast-wrap"></div>
+<input type="file" id="import-file" accept="application/json">
+
+<!-- FAB Modal -->
+<div class="modal-ov" id="m-fab">
+  <div class="modal">
+    <div class="modal-title">إضافة جديد <button class="mcls" onclick="cm('m-fab')"></button></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <button class="btn btn-s" onclick="openAddSubject();cm('m-fab')" style="padding:16px;border-radius:12px;text-align:center"><br><span style="font-size:13px;margin-top:4px;display:block">مادة جديدة</span></button>
+      <button class="btn btn-s" onclick="openAddClass();cm('m-fab')" style="padding:16px;border-radius:12px;text-align:center"><br><span style="font-size:13px;margin-top:4px;display:block">حصة</span></button>
+      <button class="btn btn-s" onclick="openAddAssignment();cm('m-fab')" style="padding:16px;border-radius:12px;text-align:center"><br><span style="font-size:13px;margin-top:4px;display:block">واجب</span></button>
+      <button class="btn btn-s" onclick="openAddExam();cm('m-fab')" style="padding:16px;border-radius:12px;text-align:center"><br><span style="font-size:13px;margin-top:4px;display:block">اختبار</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Subject -->
+<div class="modal-ov" id="m-subj">
+  <div class="modal">
+    <div class="modal-title"><span id="subj-modal-title">إضافة مادة</span><button class="mcls" onclick="cm('m-subj')"></button></div>
+    <div class="fg"><label class="fl">اسم المادة (عربي)</label><input class="fi" id="si-ar" placeholder="مثال: تحليل خوارزميات"></div>
+    <div class="fg"><label class="fl">Subject name (English)</label><input class="fi" id="si-en" placeholder="e.g. Algorithm Analysis" style="direction:ltr"></div>
+    <div class="fg"><label class="fl">لون المادة</label><div class="cgrid" id="cpicker"></div></div>
+    <div class="fg"><label class="fl">مستوى الصعوبة</label><div style="display:flex;gap:8px;cursor:pointer" id="dpicker"></div></div>
+    <div class="fg">
+      <label class="fl">مكونات الدرجة</label>
+      <div id="gc-list"></div>
+      <button class="add-btn" onclick="addGC()" style="margin-top:8px;width:100%">+ إضافة مكوّن</button>
+    </div>
+    <div class="btn-row"><button class="btn btn-p btn-f" onclick="saveSubject()">حفظ المادة</button></div>
+  </div>
+</div>
+
+<!-- Subject Detail -->
+<div class="modal-ov" id="m-detail">
+  <div class="modal">
+    <div class="modal-title"><span id="det-title"></span><button class="mcls" onclick="cm('m-detail')"></button></div>
+    <div id="det-body"></div>
+  </div>
+</div>
+
+<!-- Add Class -->
+<div class="modal-ov" id="m-class">
+  <div class="modal">
+    <div class="modal-title">إضافة حصة <button class="mcls" onclick="cm('m-class')"></button></div>
+    <div class="fg"><label class="fl">المادة</label><select class="fsel" id="cl-subj"></select></div>
+    <div class="fg"><label class="fl">الأيام</label><div class="days-grid" id="cl-days"></div></div>
+    <div class="frow">
+      <div class="fg"><label class="fl">من</label><input type="time" class="fi ti" id="cl-start" value="08:00"></div>
+      <div class="fg"><label class="fl">إلى</label><input type="time" class="fi ti" id="cl-end" value="09:30"></div>
+    </div>
+    <div class="fg"><label class="fl">القاعة (اختياري)</label><input class="fi" id="cl-room" placeholder="D201"></div>
+    <div class="btn-row"><button class="btn btn-p btn-f" onclick="saveClass()">حفظ</button></div>
+  </div>
+</div>
+
+<!-- Add Assignment -->
+<div class="modal-ov" id="m-assign">
+  <div class="modal">
+    <div class="modal-title">إضافة واجب <button class="mcls" onclick="cm('m-assign')"></button></div>
+    <div class="fg"><label class="fl">المادة</label><select class="fsel" id="as-subj"></select></div>
+    <div class="fg"><label class="fl">عنوان الواجب</label><input class="fi" id="as-title" placeholder="مثال: واجب الفصل الثالث"></div>
+    <div class="fg"><label class="fl">تاريخ التسليم</label><input type="text" inputmode="numeric" class="fi ti" id="as-due" placeholder="2026-05-04 أو 1447-11-17"><div class="date-help">يقبل التاريخ الميلادي أو الهجري، وسيُحفظ داخليًا للتقويم.</div></div>
+    <div class="btn-row"><button class="btn btn-p btn-f" onclick="saveAssignment()">حفظ</button></div>
+  </div>
+</div>
+
+<!-- Add Exam -->
+<div class="modal-ov" id="m-exam">
+  <div class="modal">
+    <div class="modal-title">إضافة اختبار <button class="mcls" onclick="cm('m-exam')"></button></div>
+    <div class="fg"><label class="fl">المادة</label><select class="fsel" id="ex-subj"></select></div>
+    <div class="frow">
+      <div class="fg"><label class="fl">التاريخ</label><input type="text" inputmode="numeric" class="fi ti" id="ex-date" placeholder="2026-05-04 أو 1447-11-17"><div class="date-help">يقبل التاريخ الميلادي أو الهجري.</div></div>
+      <div class="fg"><label class="fl">الوقت</label><input type="time" class="fi ti" id="ex-time" value="09:00"></div>
+    </div>
+    <div class="fg"><label class="fl">القاعة (اختياري)</label><input class="fi" id="ex-room" placeholder="قاعة A1"></div>
+    <div class="btn-row"><button class="btn btn-p btn-f" onclick="saveExam()">حفظ</button></div>
+  </div>
+</div>
+
+<!-- Add Commitment -->
+<div class="modal-ov" id="m-commit">
+  <div class="modal">
+    <div class="modal-title">إضافة التزام يومي <button class="mcls" onclick="cm('m-commit')"></button></div>
+    <div class="fg">
+      <label class="fl">النوع</label>
+      <select class="fsel" id="co-type" onchange="commitTypeChange()">
+        <option value="exercise">رياضة </option>
+        <option value="work">عمل</option>
+        <option value="other">أخرى</option>
+      </select>
+    </div>
+    <div class="fg" id="co-custom" style="display:none"><label class="fl">الاسم</label><input class="fi" id="co-name" placeholder="اسم الالتزام"></div>
+    <div class="fg"><label class="fl">الأيام</label><div class="days-grid" id="co-days"></div></div>
+    <div class="frow">
+      <div class="fg"><label class="fl">من</label><input type="time" class="fi ti" id="co-start" value="23:00"></div>
+      <div class="fg"><label class="fl">إلى</label><input type="time" class="fi ti" id="co-end" value="06:00"></div>
+    </div>
+    <div class="btn-row"><button class="btn btn-p btn-f" onclick="saveCommitment()">حفظ</button></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+<script>
+const SK='study_planner_v2';
+const NOTIFY_KEY='notified_v1';
+const COLORS=['#534AB7','#0F6E56','#D85A30','#D4537E','#185FA5','#639922','#BA7517','#A32D2D','#888780'];
+const CLIGHTS=['#EEEDFE','#E1F5EE','#FAECE7','#FBEAF0','#E6F1FB','#EAF3DE','#FAEEDA','#FCEBEB','#F1EFE8'];
+const DAYS_AR=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+const DAYS_S=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'];
+const PAGE_TITLES={dashboard:'لوحة التحكم',schedule:'الجدول الأسبوعي',subjects:'المواد الدراسية',settings:'الإعدادات'};
+const DAY_START_HOUR=8;
+const DAY_END_HOUR=20;
+const ROW_H=68;
+const DAY_HEIGHT=(DAY_END_HOUR-DAY_START_HOUR)*ROW_H;
+const DEFAULT_SUBJECT_COMPS=()=>[
+  {id:uid(),name:'حضور',max:10,earned:''},
+  {id:uid(),name:'اختبار',max:60,earned:''},
+  {id:uid(),name:'واجبات',max:30,earned:''}
+];
+const DEFAULTS={
+  subjects:[],
+  classes:[],
+  assignments:[],
+  exams:[],
+  commitments:[],
+  aiSchedule:[],
+  settings:{sleepStart:'23:00',sleepEnd:'06:00',focusStart:'15:00',focusEnd:'16:00',semesterStart:'',semesterEnd:'',holidays:[]}
+};
+let D=normalizeData(DEFAULTS);
+let editSubjId=null,selColor=COLORS[0],selDiff=3,gComps=[],clDays=[],coDays=[],curPage='dashboard',weekOff=0,swReg=null;
+
+function uid(){return Math.random().toString(36).slice(2,11)}
+function t2m(t){if(!t||typeof t!=='string'||!t.includes(':'))return 0;const[h,m]=t.split(':').map(Number);return ((h||0)*60)+((m||0))}
+function m2t(m){const total=((Math.round(m)%1440)+1440)%1440;return String(Math.floor(total/60)).padStart(2,'0')+':'+String(total%60).padStart(2,'0')}
+function formatHour12(hour){const h=((hour+11)%12)+1;return `${h} ${hour<12?'AM':'PM'}`}
+function formatTime12Value(t){const mins=t2m(t);const h=Math.floor(mins/60)%24;const m=mins%60;return `${((h+11)%12)+1}:${String(m).padStart(2,'0')} ${h<12?'AM':'PM'}`}
+function formatTimeAr(mins){const date=new Date();date.setHours(0,0,0,0);date.setMinutes(mins);return date.toLocaleTimeString('ar-SA',{hour:'numeric',minute:'2-digit'})}
+function parseDateOnly(str){if(!str||typeof str!=='string')return null;const parts=str.split('-').map(Number);if(parts.length!==3||parts.some(Number.isNaN))return null;return new Date(parts[0],parts[1]-1,parts[2])}
+function fmtDateInput(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+const GREG_LOCALE='ar-SA-u-ca-gregory';
+const HIJRI_LOCALE='ar-SA-u-ca-islamic-umalqura';
+const DATE_HINT='مثال ميلادي: 2026-05-04 أو هجري: 1447-11-17';
+function fmtGregorian(d,opts){return d.toLocaleDateString(GREG_LOCALE,opts)}
+function fmtHijri(d,opts){return d.toLocaleDateString(HIJRI_LOCALE,opts)}
+function fmtDualDate(d,opts={month:'short',day:'numeric'}){return `${fmtGregorian(d,opts)} / ${fmtHijri(d,opts)}`}
+function fmtDualDateFull(d){return `${fmtGregorian(d,{weekday:'long',year:'numeric',month:'long',day:'numeric'})} — ${fmtHijri(d,{year:'numeric',month:'long',day:'numeric'})}`}
+function fmtDualDateStack(d){return `<div class="date-g">${esc(fmtGregorian(d,{month:'short',day:'numeric'}))}</div><div class="date-h">${esc(fmtHijri(d,{month:'short',day:'numeric'}))}</div>`}
+function normalizeDigits(str){return String(str??'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d))}
+function validGregIso(y,m,d){const dt=new Date(y,m-1,d);if(dt.getFullYear()!==y||dt.getMonth()!==m-1||dt.getDate()!==d)return '';return fmtDateInput(dt)}
+function hijriParts(dt){const out={};new Intl.DateTimeFormat(HIJRI_LOCALE,{year:'numeric',month:'numeric',day:'numeric'}).formatToParts(dt).forEach(p=>{if(p.type==='year'||p.type==='month'||p.type==='day')out[p.type]=parseInt(normalizeDigits(p.value),10)});return out}
+function hijriToGregorianIso(y,m,d){if(!(y>=1200&&y<=1700&&m>=1&&m<=12&&d>=1&&d<=30))return '';const base=new Date(y+579,m-1,d);for(let off=-430;off<=430;off++){const cand=addDays(base,off);const hp=hijriParts(cand);if(hp.year===y&&hp.month===m&&hp.day===d)return fmtDateInput(cand)}return ''}
+function parseFlexibleDateInput(value){let s=normalizeDigits(value).trim().toLowerCase();if(!s)return '';let forced='';if(/^(h|hijri|هجري|هـ)\s*[:\-]?\s*/.test(s)){forced='h';s=s.replace(/^(h|hijri|هجري|هـ)\s*[:\-]?\s*/,'')}else if(/^(g|gregorian|ميلادي|م)\s*[:\-]?\s*/.test(s)){forced='g';s=s.replace(/^(g|gregorian|ميلادي|م)\s*[:\-]?\s*/,'')}const m=s.match(/^(\d{1,4})[\/\-.](\d{1,2})[\/\-.](\d{1,4})$/);if(!m)return '';let a=parseInt(m[1],10),b=parseInt(m[2],10),c=parseInt(m[3],10),y,mo,da;if(String(m[1]).length===4){y=a;mo=b;da=c}else if(String(m[3]).length===4){y=c;if(a>12){da=a;mo=b}else if(b>12){mo=a;da=b}else{mo=a;da=b}}else{return ''}if(forced==='h'||(!forced&&y>=1200&&y<=1700))return hijriToGregorianIso(y,mo,da);return validGregIso(y,mo,da)}
+function displayDateInputValue(iso){return iso||''}
+function startOfDay(d){const x=new Date(d);x.setHours(0,0,0,0);return x}
+function addDays(date,n){const d=new Date(date);d.setDate(d.getDate()+n);return d}
+function sameDay(a,b){return startOfDay(a).getTime()===startOfDay(b).getTime()}
+function diffDays(from,to){return Math.round((startOfDay(to)-startOfDay(from))/86400000)}
+function clamp(v,min,max){return Math.min(max,Math.max(min,v))}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function slugNum(v){const n=parseFloat(v);return Number.isFinite(n)?n:''}
+function loadNotified(){try{return JSON.parse(localStorage.getItem(NOTIFY_KEY)||'{}')}catch(e){return {}}}
+function saveNotified(map){localStorage.setItem(NOTIFY_KEY,JSON.stringify(map||{}))}
+function normalizeData(input){
+  const src=input&&typeof input==='object'?input:{};
+  return {
+    subjects:Array.isArray(src.subjects)?src.subjects.map(normalizeSubject).filter(Boolean):[],
+    classes:Array.isArray(src.classes)?src.classes.map(normalizeClass).filter(Boolean):[],
+    assignments:Array.isArray(src.assignments)?src.assignments.map(normalizeAssignment).filter(Boolean):[],
+    exams:Array.isArray(src.exams)?src.exams.map(normalizeExam).filter(Boolean):[],
+    commitments:Array.isArray(src.commitments)?src.commitments.map(normalizeCommitment).filter(Boolean):[],
+    aiSchedule:Array.isArray(src.aiSchedule)?src.aiSchedule.map(normalizeAiScheduleItem).filter(Boolean):[],
+    settings:{...DEFAULTS.settings,...(src.settings&&typeof src.settings==='object'?src.settings:{})}
+  };
+}
+function normalizeSubject(s){
+  if(!s||typeof s!=='object')return null;
+  const comps=Array.isArray(s.gradeComponents)?s.gradeComponents.map(c=>({
+    id:c&&c.id?String(c.id):uid(),
+    name:c&&c.name!=null?String(c.name):'مكوّن',
+    max:Number.isFinite(parseFloat(c&&c.max))?parseFloat(c.max):0,
+    earned:c&&c.earned!=null?c.earned:''
+  })) : [];
+  return {
+    id:s.id?String(s.id):uid(),
+    nameAr:s.nameAr!=null?String(s.nameAr):'مادة',
+    nameEn:s.nameEn!=null?String(s.nameEn):'',
+    color:COLORS.includes(s.color)?s.color:COLORS[0],
+    difficulty:clamp(parseInt(s.difficulty||3,10)||3,1,5),
+    gradeComponents:comps
+  };
+}
+function normalizeClass(c){
+  if(!c||typeof c!=='object')return null;
+  return {id:c.id?String(c.id):uid(),subjectId:c.subjectId?String(c.subjectId):'',days:Array.isArray(c.days)?c.days.map(Number).filter(n=>n>=0&&n<=6):[],startTime:c.startTime||'08:00',endTime:c.endTime||'09:00',room:c.room?String(c.room):''};
+}
+function normalizeAssignment(a){
+  if(!a||typeof a!=='object')return null;
+  return {id:a.id?String(a.id):uid(),subjectId:a.subjectId?String(a.subjectId):'',title:a.title?String(a.title):'واجب',due:a.due?String(a.due):fmtDateInput(new Date())};
+}
+function normalizeExam(e){
+  if(!e||typeof e!=='object')return null;
+  return {id:e.id?String(e.id):uid(),subjectId:e.subjectId?String(e.subjectId):'',date:e.date?String(e.date):fmtDateInput(new Date()),time:e.time?String(e.time):'',room:e.room?String(e.room):''};
+}
+function normalizeCommitment(c){
+  if(!c||typeof c!=='object')return null;
+  return {id:c.id?String(c.id):uid(),name:c.name?String(c.name):'التزام',type:c.type?String(c.type):'other',days:Array.isArray(c.days)?c.days.map(Number).filter(n=>n>=0&&n<=6):[],startTime:c.startTime||'00:00',endTime:c.endTime||'00:00'};
+}
+function normalizeAiScheduleItem(item){
+  if(!item||typeof item!=='object')return null;
+  const start=new Date(item.startTime),end=new Date(item.endTime);
+  if(Number.isNaN(start.getTime())||Number.isNaN(end.getTime())||end<=start)return null;
+  const type=item.type==='break'?'break':'study';
+  return {subject:item.subject?String(item.subject):(type==='break'?'Break':'Study'),startTime:start.toISOString(),endTime:end.toISOString(),type};
+}
+function load(){try{const s=localStorage.getItem(SK);if(s)D=normalizeData(JSON.parse(s));else D=normalizeData(DEFAULTS)}catch(e){D=normalizeData(DEFAULTS)}}
+function save(){D=normalizeData(D);localStorage.setItem(SK,JSON.stringify(D))}
+function toast(msg,type='info'){
+  const wrap=document.getElementById('toast-wrap');
+  const el=document.createElement('div');
+  el.className='toast '+(type==='danger'?'danger':type==='ok'?'ok':'info');
+  el.innerHTML=`<div class="toast-dot"></div><div style="flex:1">${esc(msg)}</div>`;
+  wrap.appendChild(el);
+  setTimeout(()=>{el.classList.add('hide');setTimeout(()=>el.remove(),200)},2500);
+}
+load();
+function updateTopbarDate(){document.getElementById('today-date').textContent=fmtDualDateFull(new Date())}
+updateTopbarDate();
+
+function nav(p){
+  document.getElementById('pg-'+curPage).classList.remove('active');
+  document.querySelectorAll('.ni').forEach((el,i)=>{el.classList.toggle('active',['dashboard','schedule','subjects','settings'][i]===p)});
+  curPage=p;
+  document.getElementById('pg-'+p).classList.add('active');
+  document.getElementById('page-title').textContent=PAGE_TITLES[p];
+  updateTopbarDate();
+  if(p==='dashboard')renderDash();
+  if(p==='schedule')renderSched();
+  if(p==='subjects')renderSubjs();
+  if(p==='settings')renderSettings();
+}
+function om(id){document.getElementById(id).classList.add('open')}
+function cm(id){document.getElementById(id).classList.remove('open')}
+function openFAB(){if(D.subjects.length===0){openAddSubject();return}om('m-fab')}
+document.querySelectorAll('.modal-ov').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open')}));
+
+function subjById(id){return D.subjects.find(x=>x.id===id)}
+function calcGrade(s){
+  if(!s||!Array.isArray(s.gradeComponents)||!s.gradeComponents.length)return null;
+  let earned=0,total=0,hasAny=false;
+  s.gradeComponents.forEach(c=>{
+    const max=parseFloat(c.max)||0;
+    const val=(c.earned!==''&&c.earned!==null&&c.earned!==undefined)?parseFloat(c.earned):NaN;
+    total+=max;
+    if(Number.isFinite(val)){earned+=val;hasAny=true}
+  });
+  if(!hasAny||!total)return null;
+  return clamp((earned/total)*100,0,100);
+}
+function calcGpaEstimate(){
+  const grades=D.subjects.map(calcGrade).filter(v=>v!==null);
+  if(grades.length<2)return null;
+  const avg=grades.reduce((a,b)=>a+b,0)/grades.length;
+  return clamp(avg/20,0,5);
+}
+function starsHtml(n){let h='';for(let i=1;i<=5;i++)h+=`<div class="star ${i<=n?'son':'soff'}"></div>`;return h}
+function getSubjectLight(color){const idx=COLORS.indexOf(color);return idx>=0?CLIGHTS[idx]:'#f0f0f0'}
+function getUpcoming(days){
+  const now=startOfDay(new Date());
+  const fut=addDays(now,days);
+  const items=[];
+  D.assignments.forEach(a=>{
+    const d=parseDateOnly(a.due);if(!d||d<now||d>fut)return;
+    const s=subjById(a.subjectId);
+    items.push({...a,sn:s?s.nameAr:'—',color:s?s.color:COLORS[0],dl:diffDays(now,d),title:a.title,type:'assign'});
+  });
+  D.exams.forEach(e=>{
+    const d=parseDateOnly(e.date);if(!d||d<now||d>fut)return;
+    const s=subjById(e.subjectId);
+    items.push({...e,sn:s?s.nameAr:'—',color:s?s.color:COLORS[0],dl:diffDays(now,d),title:'اختبار',type:'exam'});
+  });
+  return items.sort((a,b)=>a.dl!==b.dl?a.dl-b.dl:a.sn.localeCompare(b.sn,'ar'));
+}
+function getTodayClasses(day){return D.classes.filter(c=>Array.isArray(c.days)&&c.days.includes(day)).sort((a,b)=>t2m(a.startTime)-t2m(b.startTime))}
+function normalizeIntervals(intervals){
+  const clean=intervals.filter(i=>Number.isFinite(i.start)&&Number.isFinite(i.end)&&i.end>i.start).sort((a,b)=>a.start-b.start);
+  const out=[];
+  clean.forEach(it=>{
+    if(!out.length||it.start>out[out.length-1].end)out.push({...it});
+    else out[out.length-1].end=Math.max(out[out.length-1].end,it.end);
+  });
+  return out;
+}
+function clipInterval(start,end,windowStart,windowEnd){
+  const s=Math.max(start,windowStart),e=Math.min(end,windowEnd);
+  return e>s?{start:s,end:e}:null;
+}
+function getBusyIntervals(date){
+  const day=date.getDay();
+  const windowStart=t2m(D.settings.sleepEnd||'06:00');
+  let windowEnd=t2m(D.settings.sleepStart||'23:00');
+  if(windowEnd<=windowStart)windowEnd+=1440;
+  const base=[];
+  [...D.classes,...D.commitments].forEach(item=>{
+    if(!item.days||!item.days.includes(day))return;
+    let start=t2m(item.startTime||'00:00');
+    let end=t2m(item.endTime||'00:00');
+    if(end<=start)end+=1440;
+    const direct=clipInterval(start,end,windowStart,windowEnd); if(direct)base.push(direct);
+    const shifted=clipInterval(start+1440,end+1440,windowStart,windowEnd); if(shifted)base.push(shifted);
+    const shiftedBack=clipInterval(start-1440,end-1440,windowStart,windowEnd); if(shiftedBack)base.push(shiftedBack);
+  });
+  return normalizeIntervals(base);
+}
+function getFreeSlots(date){
+  const windowStart=t2m(D.settings.sleepEnd||'06:00');
+  let windowEnd=t2m(D.settings.sleepStart||'23:00');
+  if(windowEnd<=windowStart)windowEnd+=1440;
+  const busy=getBusyIntervals(date);
+  const free=[];
+  let cursor=windowStart;
+  busy.forEach(b=>{
+    if(b.start>cursor)free.push({start:cursor,end:b.start});
+    cursor=Math.max(cursor,b.end);
+  });
+  if(cursor<windowEnd)free.push({start:cursor,end:windowEnd});
+  return free.filter(s=>s.end-s.start>0);
+}
+function splitSlotsAt(slots,boundaries){
+  const pts=[...new Set(boundaries.filter(Number.isFinite))].sort((a,b)=>a-b);
+  const out=[];
+  slots.forEach(slot=>{
+    let parts=[{...slot}];
+    pts.forEach(p=>{
+      parts=parts.flatMap(part=>p>part.start&&p<part.end?[{start:part.start,end:p},{start:p,end:part.end}]:[part]);
+    });
+    out.push(...parts);
+  });
+  return out.filter(s=>s.end>s.start).sort((a,b)=>a.start-b.start);
+}
+function totalMinutes(slots){return slots.reduce((a,s)=>a+(s.end-s.start),0)}
+function consumeFromSlots(slots,need,preferWindow){
+  let remaining=need;
+  const blocks=[];
+  const focus=preferWindow?slots.filter(s=>s.start>=preferWindow.start&&s.end<=preferWindow.end):[];
+  const normal=slots.filter(s=>!(preferWindow&&s.start>=preferWindow.start&&s.end<=preferWindow.end));
+  const ordered=preferWindow?[...focus,...normal]:[...slots].sort((a,b)=>a.start-b.start);
+  ordered.forEach(seg=>{
+    if(remaining<=0)return;
+    const src=slots.find(s=>s===seg) || slots.find(s=>s.start===seg.start&&s.end===seg.end);
+    if(!src)return;
+    const available=src.end-src.start;
+    if(available<=0)return;
+    const take=Math.min(remaining,available);
+    blocks.push({start:src.start,end:src.start+take});
+    src.start+=take;
+    remaining-=take;
+  });
+  const kept=slots.filter(s=>s.end-s.start>0).sort((a,b)=>a.start-b.start);
+  slots.length=0;kept.forEach(s=>slots.push(s));
+  return {blocks,used:need-remaining};
+}
+function deadlineMetaForSubject(subj,today){
+  const deadlines=[];
+  D.assignments.forEach(a=>{if(a.subjectId!==subj.id)return;const d=parseDateOnly(a.due);if(!d||d<today)return;deadlines.push({d,title:a.title,type:'واجب'})});
+  D.exams.forEach(e=>{if(e.subjectId!==subj.id)return;const d=parseDateOnly(e.date);if(!d||d<today)return;deadlines.push({d,title:'اختبار',type:'اختبار'})});
+  deadlines.sort((a,b)=>a.d-b.d);
+  if(!deadlines.length)return null;
+  const next=deadlines[0];
+  const dl=diffDays(today,next.d);
+  if(dl>14)return null;
+  let mins=(subj.difficulty||3)*20;
+  let mult=1;
+  if(dl<=1)mult=3;else if(dl<=3)mult=2;else if(dl<=7)mult=1.5;
+  mins=Math.round(clamp(mins*mult,30,120));
+  return {dl,mins,reason:`${next.type}: ${next.title}`,score:(subj.difficulty||3)*mult,next};
+}
+function studyPlan(date){
+  const today=startOfDay(date);
+  const freeSlotsBase=getFreeSlots(today);
+  if(totalMinutes(freeSlotsBase)<30)return [];
+  const focusStart=t2m(D.settings.focusStart||'15:00');
+  let focusEnd=t2m(D.settings.focusEnd||'16:00');
+  if(focusEnd<=focusStart)focusEnd=focusStart+60;
+  const slots=splitSlotsAt(freeSlotsBase.map(s=>({...s})),[focusStart,focusEnd]);
+  const subjects=D.subjects.map(subj=>({subj,meta:deadlineMetaForSubject(subj,today)})).filter(x=>x.meta).sort((a,b)=>{
+    if(a.meta.dl!==b.meta.dl)return a.meta.dl-b.meta.dl;
+    if((b.subj.difficulty||0)!==(a.subj.difficulty||0))return (b.subj.difficulty||0)-(a.subj.difficulty||0);
+    return (b.meta.score||0)-(a.meta.score||0);
+  });
+  const plan=[];
+  subjects.forEach((item,index)=>{
+    const snapshot=slots.map(s=>({...s}));
+    const pref=index===0?{start:focusStart,end:focusEnd}:null;
+    const result=consumeFromSlots(slots,item.meta.mins,pref);
+    if(result.used<30){slots.length=0;snapshot.forEach(s=>slots.push(s));return;}
+    const blocks=result.blocks.map(b=>({start:b.start,end:b.end,startLabel:formatTimeAr(b.start)}));
+    plan.push({
+      ...item.subj,
+      dl:item.meta.dl,
+      mins:result.used,
+      requestedMins:item.meta.mins,
+      reason:item.meta.reason,
+      startMin:blocks[0].start,
+      startLabel:blocks[0].startLabel,
+      blocks
+    });
+  });
+  return plan;
+}
+function aiItemsForDate(date){
+  return (D.aiSchedule||[]).filter(item=>{
+    const start=new Date(item.startTime);
+    return !Number.isNaN(start.getTime())&&sameDay(start,date);
+  }).sort((a,b)=>new Date(a.startTime)-new Date(b.startTime));
+}
+function aiTimeParts(item){
+  const start=new Date(item.startTime),end=new Date(item.endTime);
+  return {
+    startMin:start.getHours()*60+start.getMinutes(),
+    endMin:end.getHours()*60+end.getMinutes(),
+    label:`${start.toLocaleTimeString('ar-SA',{hour:'numeric',minute:'2-digit'})} - ${end.toLocaleTimeString('ar-SA',{hour:'numeric',minute:'2-digit'})}`
+  };
+}
+function promptAiPreferences(){
+  const modeMap={today:'today',week:'next7',nearest:'nearest',semester:'semester'};
+  const modeRaw=(prompt('AI schedule length: today, week, nearest, semester','week')||'week').trim().toLowerCase();
+  const preferredRaw=(prompt('Preferred study time: any, morning, evening','any')||'any').trim().toLowerCase();
+  const maxHours=parseFloat(prompt('Maximum study hours per day','5')||'5');
+  const wantsBreak=confirm('Do you want breaks in the AI schedule?');
+  let breakPlacement='after',breakMinutes=10;
+  if(wantsBreak){
+    breakPlacement=(prompt('Break placement: after or during','after')||'after').trim().toLowerCase()==='during'?'during':'after';
+    breakMinutes=parseInt(prompt('Break length in minutes','10')||'10',10)||10;
+  }
+  const restRaw=prompt('Preferred rest days as numbers, optional. Sunday=0 ... Saturday=6. Example: 5,6','')||'';
+  const restDays=restRaw.split(',').map(x=>parseInt(x.trim(),10)).filter(n=>n>=0&&n<=6);
+  return {
+    scheduleMode:modeMap[modeRaw]||'next7',
+    semesterEnd:D.settings.semesterEnd||'',
+    studyWindowStart:D.settings.sleepEnd||'06:00',
+    studyWindowEnd:D.settings.sleepStart||'23:00',
+    preferredStudyTime:['morning','evening'].includes(preferredRaw)?preferredRaw:'any',
+    preferredSessionMinutes:60,
+    minimumSessionMinutes:30,
+    maximumSessionMinutes:180,
+    maxHoursPerDay:Number.isFinite(maxHours)?clamp(maxHours,1,12):5,
+    restDays,
+    breakEnabled:wantsBreak,
+    breakPlacement,
+    breakMinutes:clamp(breakMinutes,5,30)
+  };
+}
+function buildAiPayload(preferences){
+  return {
+    data:{
+      subjects:D.subjects.map(s=>({
+        id:s.id,
+        name:s.nameEn||s.nameAr,
+        nameAr:s.nameAr,
+        nameEn:s.nameEn,
+        difficulty:s.difficulty||3,
+        currentGrade:calcGrade(s),
+        gradeComponents:s.gradeComponents||[]
+      })),
+      classes:D.classes.map(c=>({id:c.id,subjectId:c.subjectId,name:'Class',days:c.days||[],startTime:c.startTime,endTime:c.endTime})),
+      assignments:D.assignments.map(a=>({id:a.id,subjectId:a.subjectId,title:a.title,due:a.due})),
+      exams:D.exams.map(e=>({id:e.id,subjectId:e.subjectId,title:'Exam',date:e.date,time:e.time||'09:00'})),
+      commitments:D.commitments.map(c=>({id:c.id,name:c.name,type:c.type,days:c.days||[],startTime:c.startTime,endTime:c.endTime})),
+      holidays:Array.isArray(D.settings.holidays)?D.settings.holidays:[]
+    },
+    preferences
+  };
+}
+async function generateAiSchedule(){
+  if(!D.subjects.length){toast('Add subjects first','danger');return}
+  if(!D.assignments.length&&!D.exams.length){toast('Add an assignment or exam first','danger');return}
+  const preferences=promptAiPreferences();
+  toast('Generating AI schedule...','info');
+  try{
+    const res=await fetch('/api/generate-schedule',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(buildAiPayload(preferences))});
+    const payload=await res.json();
+    if(!res.ok)throw new Error(payload.error||'AI request failed');
+    D.aiSchedule=Array.isArray(payload.schedule)?payload.schedule.map(normalizeAiScheduleItem).filter(Boolean):[];
+    save();
+    renderSched();
+    if(curPage==='dashboard')renderDash();
+    const source=payload.source==='openai'?'OpenAI':'local fallback';
+    toast(`AI schedule saved (${source})`,'ok');
+    if(payload.warnings&&payload.warnings.length)toast(payload.warnings[0],'info');
+  }catch(err){
+    toast(err.message||'Could not generate AI schedule','danger');
+  }
+}
+function clearAiSchedule(){
+  if(!D.aiSchedule.length){toast('No AI schedule to clear','info');return}
+  if(!confirm('Clear the saved AI schedule?'))return;
+  D.aiSchedule=[];
+  save();
+  renderSched();
+  if(curPage==='dashboard')renderDash();
+  toast('AI schedule cleared','ok');
+}
+function freeHours(today){const mins=totalMinutes(getFreeSlots(today));const hrs=mins/60;return hrs%1===0?String(hrs):hrs.toFixed(1)}
+function weeksRemaining(){
+  const end=parseDateOnly(D.settings.semesterEnd);
+  if(!end)return '—';
+  const today=startOfDay(new Date());
+  const diff=Math.max(0,Math.ceil((startOfDay(end)-today)/604800000));
+  return String(diff);
+}
+function semesterRangeLabel(){
+  const s=parseDateOnly(D.settings.semesterStart),e=parseDateOnly(D.settings.semesterEnd);
+  if(!s||!e)return 'أضف تاريخ بداية ونهاية الفصل';
+  return `${fmtDualDate(s,{month:'short',day:'numeric'})} — ${fmtDualDate(e,{month:'short',day:'numeric'})}`;
+}
+function itemDateObj(item){return parseDateOnly(item.type==='assign'?item.due:item.date)}
+function itemDualDateLabel(item){const d=itemDateObj(item);return d?fmtDualDate(d,{weekday:'short',month:'short',day:'numeric'}):'—'}
+
+function renderDash(){
+  const pg=document.getElementById('pg-dashboard');
+  updateTopbarDate();
+  const today=startOfDay(new Date());
+  const todayDay=today.getDay();
+  const upcoming=getUpcoming(7);
+  const plan=studyPlan(today);
+  const tClasses=getTodayClasses(todayDay);
+  const urgent=upcoming.filter(u=>u.dl<=2);
+  const soon=upcoming.filter(u=>u.dl>2&&u.dl<=5);
+  const totalA=D.assignments.filter(a=>{const d=parseDateOnly(a.due);return d&&d>=today}).length;
+  const totalE=D.exams.filter(e=>{const d=parseDateOnly(e.date);return d&&d>=today}).length;
+  const freeH=freeHours(today);
+  let h='';
+  if(D.subjects.length===0){
+    pg.innerHTML=`<div class="empty" style="margin-top:60px"><div class="empty-icon"></div><div style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:8px">ابدأ بإضافة مواد</div><div>اضغط + لإضافة موادك ومواعيدك</div></div>`;
+    return;
+  }
+  h+=`<div class="stats-row">
+    <div class="stat"><div class="stat-val">${totalA}</div><div class="stat-label">واجبات قادمة</div></div>
+    <div class="stat"><div class="stat-val">${totalE}</div><div class="stat-label">اختبارات</div></div>
+    <div class="stat"><div class="stat-val">${freeH}</div><div class="stat-label">ساعات فراغ اليوم</div></div>
+    <div class="stat"><div class="stat-val">${weeksRemaining()}</div><div class="stat-label">أسابيع متبقية</div></div>
+  </div>`;
+  if(D.settings.semesterStart||D.settings.semesterEnd)h+=`<div class="card" style="padding:12px 14px"><div class="muted">الفصل الدراسي</div><div style="font-size:14px;font-weight:600;margin-top:4px">${semesterRangeLabel()}</div></div>`;
+  urgent.slice(0,3).forEach(u=>{h+=`<div class="alert al-d"><div class="adot" style="background:var(--danger)"></div><div style="flex:1"><div>${esc(u.sn)} — ${esc(u.title)}</div><div class="tmeta">${esc(itemDualDateLabel(u))}</div></div><span class="badge bd">${u.dl===0?'اليوم':u.dl===1?'غداً':u.dl+' أيام'}</span></div>`});
+  soon.slice(0,2).forEach(u=>{h+=`<div class="alert al-w"><div class="adot" style="background:var(--warn)"></div><div style="flex:1"><div>${esc(u.sn)} — ${esc(u.title)}</div><div class="tmeta">${esc(itemDualDateLabel(u))}</div></div><span class="badge bw">${u.dl} أيام</span></div>`});
+  if(tClasses.length>0){
+    h+=`<div class="card"><div class="card-title">حصص اليوم | Today's Classes</div>`;
+    tClasses.forEach(c=>{
+      const s=subjById(c.subjectId);if(!s)return;
+      h+=`<div class="today-item"><div class="tcolor" style="background:${s.color}"></div><div class="tinfo"><div class="tname">${esc(s.nameAr)}</div><div class="tmeta">${esc(s.nameEn)}${c.room?' · '+esc(c.room):''}</div></div><div class="ttime">${formatTime12Value(c.startTime)} - ${formatTime12Value(c.endTime)}</div></div>`;
+    });
+    h+='</div>';
+  }
+  h+=`<div class="card"><div class="card-title">اذاكر اليوم | Study Plan</div>`;
+  if(plan.length===0){
+    h+=`<div style="text-align:center;padding:16px;color:var(--text3);font-size:13px"> يومك مزدحم أو لا توجد مهام قريبة — رتّب بكرة وخذ نفسًا قصيرًا</div>`;
+  }else{
+    plan.forEach(s=>{
+      const urg=s.dl<=1?'d':s.dl<=3?'w':'s';
+      const ul=s.dl<=1?'عاجل':s.dl<=3?'قريب':'مرن';
+      h+=`<div class="today-item"><div class="tcolor" style="background:${s.color}"></div><div class="tinfo"><div class="tname">${esc(s.nameAr)}</div><div class="tmeta">${esc(s.reason)}${s.startLabel?` · يبدأ ${esc(s.startLabel)}`:''}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px"><div class="ttime">${s.mins} دق</div><span class="badge b${urg}">${ul}</span></div></div>`;
+    });
+  }
+  h+='</div>';
+  pg.innerHTML=h;
+}
+
+function dayAssignments(date){
+  return D.assignments.filter(a=>{const d=parseDateOnly(a.due);return d&&sameDay(d,date)});
+}
+function dayExams(date){
+  return D.exams.filter(e=>{const d=parseDateOnly(e.date);return d&&sameDay(d,date)});
+}
+function timeToTrackPos(mins){return ((mins-(DAY_START_HOUR*60))/60)*ROW_H}
+function buildDayBlocks(date){
+  const day=date.getDay();
+  const blocks=[];
+  D.classes.filter(c=>c.days&&c.days.includes(day)).forEach(c=>{
+    const s=subjById(c.subjectId);if(!s)return;
+    const start=t2m(c.startTime),end=t2m(c.endTime);if(end<=start)return;
+    const top=timeToTrackPos(clamp(start,DAY_START_HOUR*60,DAY_END_HOUR*60));
+    const bottom=timeToTrackPos(clamp(end,DAY_START_HOUR*60,DAY_END_HOUR*60));
+    if(bottom<=0||top>=DAY_HEIGHT)return;
+    blocks.push({type:'class',top:Math.max(0,top),height:Math.max(40,Math.min(DAY_HEIGHT,bottom)-Math.max(0,top)),title:s.nameAr,sub:`${formatTime12Value(c.startTime)} - ${formatTime12Value(c.endTime)}${c.room?' · '+c.room:''}`,color:s.color,bg:getSubjectLight(s.color)});
+  });
+  dayExams(date).forEach(e=>{
+    const s=subjById(e.subjectId);const start=t2m(e.time||'08:00');
+    const end=start+60;
+    const top=timeToTrackPos(clamp(start,DAY_START_HOUR*60,DAY_END_HOUR*60));
+    const bottom=timeToTrackPos(clamp(end,DAY_START_HOUR*60,DAY_END_HOUR*60));
+    blocks.push({type:'exam',top:Math.max(0,top),height:Math.max(44,Math.min(DAY_HEIGHT,bottom)-Math.max(0,top)),title:`${s?s.nameAr:'اختبار'} `,sub:`${formatTimeAr(start)}${e.room?' · '+e.room:''}`});
+  });
+  const aiItems=aiItemsForDate(date);
+  aiItems.forEach(item=>{
+    const parts=aiTimeParts(item);
+    const top=timeToTrackPos(clamp(parts.startMin,DAY_START_HOUR*60,DAY_END_HOUR*60));
+    const bottom=timeToTrackPos(clamp(parts.endMin,DAY_START_HOUR*60,DAY_END_HOUR*60));
+    if(bottom<=0||top>=DAY_HEIGHT)return;
+    blocks.push({type:item.type,top:Math.max(0,top),height:Math.max(40,Math.min(DAY_HEIGHT,bottom)-Math.max(0,top)),title:item.type==='break'?'Break':`AI: ${item.subject}`,sub:parts.label});
+  });
+  if(!aiItems.length)studyPlan(date).forEach(p=>{
+    p.blocks.forEach((b,idx)=>{
+      const top=timeToTrackPos(clamp(b.start,DAY_START_HOUR*60,DAY_END_HOUR*60));
+      const bottom=timeToTrackPos(clamp(b.end,DAY_START_HOUR*60,DAY_END_HOUR*60));
+      if(bottom<=0||top>=DAY_HEIGHT)return;
+      blocks.push({type:'study',top:Math.max(0,top),height:Math.max(40,Math.min(DAY_HEIGHT,bottom)-Math.max(0,top)),title:idx===0?`مذاكرة ${p.nameAr}`:p.nameAr,sub:`${b.startLabel} · ${b.end-b.start} دق`});
+    });
+  });
+  return blocks.sort((a,b)=>a.top-b.top||b.height-a.height);
+}
+function renderSched(){
+  const pg=document.getElementById('pg-schedule');
+  const today=startOfDay(new Date());
+  const weekStart=addDays(today,-today.getDay()+weekOff*7);
+  const weekEnd=addDays(weekStart,6);
+  const fmt=d=>fmtDualDate(d,{month:'short',day:'numeric'});
+  let h=`<div class="week-hdr">
+    <button class="wbtn" onclick="wk(-1)">→</button>
+    <div class="wlabel">${fmt(weekStart)} — ${fmt(weekEnd)}</div>
+    <button class="wbtn" onclick="wk(1)">←</button>
+  </div>
+  <div class="card" style="padding:12px;margin-bottom:12px">
+    <div class="kv">
+      <div><div style="font-weight:600">AI Study Schedule</div><div class="muted">${(D.aiSchedule||[]).length?`${D.aiSchedule.length} saved items`:'Generate an optimized plan using your Netlify OpenAI API'}</div></div>
+      <div class="inline-actions"><button class="btn btn-p" onclick="generateAiSchedule()">Generate AI schedule</button><button class="btn btn-s" onclick="clearAiSchedule()">Clear AI</button></div>
+    </div>
+  </div>
+  <div class="cal-wrap"><div class="sched-board">`;
+  h+='<div class="sched-head-spacer"></div>';
+  for(let d=0;d<7;d++){
+    const dt=addDays(weekStart,d);
+    const isTod=sameDay(dt,new Date());
+    const pills=dayAssignments(dt).map(a=>`<span class="day-pill assign" title="${esc(a.title)}"> ${esc(a.title)}</span>`).join('');
+    h+=`<div class="day-head ${isTod?'tod':''}"><div class="day-name">${DAYS_S[d]}</div><div class="day-date">${fmtDualDateStack(dt)}</div><div class="day-pills">${pills}</div></div>`;
+  }
+  h+='<div class="time-col">';
+  for(let hr=DAY_START_HOUR;hr<=DAY_END_HOUR;hr++){
+    const top=(hr-DAY_START_HOUR)*ROW_H;
+    h+=`<div class="time-line" style="top:${top}px"></div><div class="tlabel" style="top:${top}px">${formatHour12(hr)}</div>`;
+  }
+  h+='</div>';
+  for(let d=0;d<7;d++){
+    const dt=addDays(weekStart,d);const isTod=sameDay(dt,new Date());
+    const blocks=buildDayBlocks(dt);
+    h+=`<div class="day-track ${isTod?'tod':''}">`;
+    blocks.forEach(b=>{
+      const style=b.type==='class'?`top:${b.top}px;height:${b.height}px;background:${b.bg};border-color:${b.color}55;color:${b.color}`:`top:${b.top}px;height:${b.height}px`;
+      h+=`<div class="sblock ${b.type}" style="${style}" title="${esc(b.title)}"><div>${esc(b.title)}</div><div class="sblock-time">${esc(b.sub||'')}</div></div>`;
+    });
+    h+='</div>';
+  }
+  h+='</div></div>';
+  const up=getUpcoming(14);
+  if(up.length>0){
+    h+=`<div class="card" style="margin-top:12px"><div class="card-title">المواعيد القادمة</div>`;
+    up.slice(0,8).forEach(u=>{
+      const urg=u.dl<=2?'d':u.dl<=5?'w':'s';
+      const baseDate=u.type==='assign'?u.due:u.date;
+      const dateObj=parseDateOnly(baseDate);
+      const dateStr=dateObj?fmtDualDate(dateObj,{weekday:'short',month:'short',day:'numeric'}):'—';
+      h+=`<div class="today-item"><div style="flex:1"><div class="tname">${esc(u.sn)} — ${esc(u.title)}</div><div class="tmeta">${dateStr}</div></div><span class="badge b${urg}">${u.dl} ${u.dl===1?'يوم':'أيام'}</span></div>`;
+    });
+    h+='</div>';
+  }
+  pg.innerHTML=h;
+}
+function wk(d){weekOff+=d;renderSched()}
+
+function renderSubjs(){
+  const pg=document.getElementById('pg-subjects');
+  let h=`<div class="sec-hdr"><div class="sec-title">المواد الدراسية</div><button class="add-btn" onclick="openAddSubject()">+ إضافة مادة</button></div>`;
+  const gpa=calcGpaEstimate();
+  if(gpa!==null){
+    h+=`<div class="card gpa-card"><div class="gpa-grid"><div><div class="card-title" style="color:rgba(255,255,255,.75);margin-bottom:6px">GPA ESTIMATE</div><div class="gpa-val">${gpa.toFixed(2)}</div><div class="gpa-sub">تقدير تقريبي من 5.0</div></div><div style="text-align:left"><div class="badge" style="background:rgba(255,255,255,.16);color:#fff">${D.subjects.map(calcGrade).filter(v=>v!==null).length} مواد محسوبة</div></div></div></div>`;
+  }
+  if(!D.subjects.length){h+=`<div class="empty"><div class="empty-icon"></div>لم تضف أي مادة بعد</div>`;pg.innerHTML=h;return}
+  D.subjects.forEach(s=>{
+    const g=calcGrade(s);
+    h+=`<div class="subj-card">
+      <div class="subj-head">
+        <div class="sdot" style="background:${s.color}"></div>
+        <div class="sinfo">
+          <div class="sname">${esc(s.nameAr)}</div>
+          <div class="sgrade">${esc(s.nameEn||'')}${g!==null?` · ${g.toFixed(1)} / 100`:' · —'}</div>
+          <div class="prog-wrap"><div class="prog-bar" style="background:${s.color};width:${g!==null?g:0}%"></div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <div class="stars">${starsHtml(s.difficulty||3)}</div>
+          <div class="inline-actions">
+            <button class="btn btn-s" style="padding:7px 10px;font-size:12px" onclick="openDetail('${s.id}')">التفاصيل</button>
+            <button class="btn btn-s" style="padding:7px 10px;font-size:12px" onclick="openAddSubject('${s.id}')">تعديل</button>
+          </div>
+        </div>
+      </div>`;
+    if(Array.isArray(s.gradeComponents)&&s.gradeComponents.length){
+      h+='<div class="comp-list">';
+      s.gradeComponents.forEach((c,i)=>{
+        const max=parseFloat(c.max)||0;
+        const earned=(c.earned!==''&&c.earned!==null&&c.earned!==undefined)?parseFloat(c.earned):NaN;
+        const pct=max&&Number.isFinite(earned)?clamp((earned/max)*100,0,100):0;
+        h+=`<div class="comp-row"><div class="comp-stack"><div class="comp-name">${esc(c.name)}</div><div class="comp-meter"><div class="comp-fill" style="width:${pct}%;background:${s.color}"></div></div></div><input class="comp-input" type="number" step="0.1" placeholder="—" value="${Number.isFinite(earned)?earned:''}" onchange="setSubjectComponentEarned('${s.id}','${c.id}',this.value)"><div class="muted">/ ${max||0}</div></div>`;
+      });
+      h+='</div>';
+    }else{
+      h+='<div class="muted">لا توجد مكوّنات درجة لهذه المادة</div>';
+    }
+    h+='</div>';
+  });
+  pg.innerHTML=h;
+}
+function setSubjectComponentEarned(subjId,compId,val){
+  const s=subjById(subjId);if(!s||!Array.isArray(s.gradeComponents))return;
+  const c=s.gradeComponents.find(x=>x.id===compId);if(!c)return;
+  c.earned=val===''?'':val;
+  save();
+  renderSubjs();
+}
+
+function openAddSubject(id){
+  editSubjId=id||null;
+  selColor=COLORS[0];selDiff=3;gComps=DEFAULT_SUBJECT_COMPS();
+  if(id){
+    const s=subjById(id);
+    if(s){
+      document.getElementById('si-ar').value=s.nameAr||'';
+      document.getElementById('si-en').value=s.nameEn||'';
+      selColor=s.color||COLORS[0];selDiff=s.difficulty||3;
+      gComps=s.gradeComponents?JSON.parse(JSON.stringify(s.gradeComponents)):DEFAULT_SUBJECT_COMPS();
+      document.getElementById('subj-modal-title').textContent='تعديل المادة';
+    }
+  }else{
+    document.getElementById('si-ar').value='';
+    document.getElementById('si-en').value='';
+    document.getElementById('subj-modal-title').textContent='إضافة مادة جديدة';
+  }
+  rColorPicker();rDiffPicker();rGC();om('m-subj');
+}
+function rColorPicker(){document.getElementById('cpicker').innerHTML=COLORS.map(c=>`<div class="copt ${c===selColor?'sel':''}" style="background:${c}" onclick="pickColor('${c}',this)"></div>`).join('')}
+function pickColor(c,el){selColor=c;document.querySelectorAll('.copt').forEach(e=>e.classList.remove('sel'));el.classList.add('sel')}
+function rDiffPicker(){const w=document.getElementById('dpicker');w.innerHTML='';for(let i=1;i<=5;i++){const s=document.createElement('div');s.style.cssText=`width:28px;height:28px;border-radius:50%;background:${i<=selDiff?'#EF9F27':'#e5e5e5'};cursor:pointer;transition:transform .1s`;s.onclick=()=>{selDiff=i;rDiffPicker()};w.appendChild(s)}}
+function rGC(){document.getElementById('gc-list').innerHTML=gComps.map((c,i)=>`<div class="gc-row"><input class="fi" style="padding:6px 8px;font-size:13px" value="${esc(c.name)}" onchange="gComps[${i}].name=this.value"><input class="mini" type="number" placeholder="درجة" value="${c.earned!==undefined?esc(c.earned):''}" onchange="gComps[${i}].earned=this.value"><span style="font-size:11px;color:var(--text3)">/ </span><input class="mini" type="number" value="${esc(c.max)}" onchange="gComps[${i}].max=this.value"><button class="del-btn" onclick="gComps.splice(${i},1);rGC()"></button></div>`).join('')}
+function addGC(){gComps.push({id:uid(),name:'مكوّن',max:10,earned:''});rGC()}
+function saveSubject(){
+  const ar=document.getElementById('si-ar').value.trim();
+  const en=document.getElementById('si-en').value.trim();
+  if(!ar){toast('أدخل اسم المادة','danger');return}
+  const subj=normalizeSubject({id:editSubjId||uid(),nameAr:ar,nameEn:en,color:selColor,difficulty:selDiff,gradeComponents:gComps});
+  if(editSubjId)D.subjects=D.subjects.map(s=>s.id===editSubjId?subj:s); else D.subjects.push(subj);
+  save();cm('m-subj');renderSubjs();renderDash();if(curPage==='schedule')renderSched();toast('تم حفظ المادة','ok')
+}
+
+function openDetail(id){
+  const s=subjById(id);if(!s)return;
+  document.getElementById('det-title').textContent=s.nameAr;
+  const g=calcGrade(s);
+  let h=`<div style="text-align:center;padding:12px 0 16px"><div style="font-size:38px;font-weight:700;color:${s.color}">${g!==null?g.toFixed(1):'—'}</div><div style="font-size:13px;color:var(--text2);margin-top:4px">من 100 | Out of 100</div><div class="stars" style="justify-content:center;margin-top:10px">${starsHtml(s.difficulty||3)}</div></div><div class="card-title">مكونات الدرجة | Grade Breakdown</div><div class="card">`;
+  (s.gradeComponents||[]).forEach(c=>{
+    const max=parseFloat(c.max)||0;
+    const earned=(c.earned!==''&&c.earned!==undefined&&c.earned!==null)?parseFloat(c.earned):NaN;
+    const pct=max&&Number.isFinite(earned)?clamp((earned/max)*100,0,100):0;
+    h+=`<div class="gc-row"><div style="flex:1;font-size:13px">${esc(c.name)}</div><div style="flex:1;padding:0 10px"><div class="prog-wrap"><div class="prog-bar" style="background:${s.color};width:${pct}%"></div></div></div><input class="mini" type="number" value="${Number.isFinite(earned)?earned:''}" placeholder="0" onchange="setSubjectComponentEarned('${id}','${c.id}',this.value);openDetail('${id}')"><span style="font-size:11px;color:var(--text3)">/ ${max}</span></div>`;
+  });
+  h+=`</div><div class="btn-row" style="margin-top:12px"><button class="btn btn-s" style="flex:1" onclick="openAddSubject('${id}');cm('m-detail')">تعديل</button><button class="btn btn-d" style="flex:1" onclick="delSubject('${id}')">حذف المادة</button></div>`;
+  document.getElementById('det-body').innerHTML=h;
+  om('m-detail');
+}
+function delSubject(id){
+  if(!confirm('حذف هذه المادة وكل بياناتها؟'))return;
+  D.subjects=D.subjects.filter(s=>s.id!==id);
+  D.classes=D.classes.filter(c=>c.subjectId!==id);
+  D.assignments=D.assignments.filter(a=>a.subjectId!==id);
+  D.exams=D.exams.filter(e=>e.subjectId!==id);
+  save();cm('m-detail');renderSubjs();renderDash();if(curPage==='schedule')renderSched();toast('تم حذف المادة','ok')
+}
+
+function openAddClass(){
+  if(!D.subjects.length){toast('أضف مادة أولاً','danger');return}
+  clDays=[];rDays('cl-days',clDays,'cl');
+  const sel=document.getElementById('cl-subj');sel.innerHTML=D.subjects.map(s=>`<option value="${s.id}">${esc(s.nameAr)}</option>`).join('');
+  document.getElementById('cl-start').value='08:00';document.getElementById('cl-end').value='09:30';document.getElementById('cl-room').value='';om('m-class')
+}
+function rDays(cid,arr,pfx){document.getElementById(cid).innerHTML=DAYS_S.map((d,i)=>`<div class="dchip ${arr.includes(i)?'sel':''}" onclick="togDay(${i},'${pfx}')">${d}</div>`).join('')}
+function togDay(d,pfx){const arr=pfx==='cl'?clDays:coDays;const i=arr.indexOf(d);if(i>=0)arr.splice(i,1);else arr.push(d);rDays(pfx==='cl'?'cl-days':'co-days',arr,pfx)}
+function saveClass(){
+  const sid=document.getElementById('cl-subj').value,st=document.getElementById('cl-start').value,en=document.getElementById('cl-end').value,rm=document.getElementById('cl-room').value.trim();
+  if(!sid||!clDays.length||!st||!en){toast('أكمل بيانات الحصة','danger');return}
+  if(t2m(en)<=t2m(st)){toast('وقت النهاية يجب أن يكون بعد البداية','danger');return}
+  D.classes.push(normalizeClass({id:uid(),subjectId:sid,days:[...clDays],startTime:st,endTime:en,room:rm}));
+  save();cm('m-class');if(curPage==='schedule')renderSched();renderDash();toast('تمت إضافة الحصة','ok')
+}
+
+function openAddAssignment(){
+  if(!D.subjects.length){toast('أضف مادة أولاً','danger');return}
+  document.getElementById('as-subj').innerHTML=D.subjects.map(s=>`<option value="${s.id}">${esc(s.nameAr)}</option>`).join('');
+  document.getElementById('as-title').value='';document.getElementById('as-due').value=displayDateInputValue(fmtDateInput(new Date()));cm('m-fab');om('m-assign')
+}
+function saveAssignment(){
+  const sid=document.getElementById('as-subj').value,title=document.getElementById('as-title').value.trim(),dueRaw=document.getElementById('as-due').value;
+  const due=parseFlexibleDateInput(dueRaw);
+  if(!title||!dueRaw){toast('أكمل بيانات الواجب','danger');return}
+  if(!due){toast('أدخل التاريخ بصيغة صحيحة: '+DATE_HINT,'danger');return}
+  D.assignments.push(normalizeAssignment({id:uid(),subjectId:sid,title,due}));
+  save();cm('m-assign');renderDash();if(curPage==='schedule')renderSched();toast('تمت إضافة الواجب','ok')
+}
+
+function openAddExam(){
+  if(!D.subjects.length){toast('أضف مادة أولاً','danger');return}
+  document.getElementById('ex-subj').innerHTML=D.subjects.map(s=>`<option value="${s.id}">${esc(s.nameAr)}</option>`).join('');
+  document.getElementById('ex-date').value=displayDateInputValue(fmtDateInput(new Date()));document.getElementById('ex-time').value='09:00';document.getElementById('ex-room').value='';cm('m-fab');om('m-exam')
+}
+function saveExam(){
+  const sid=document.getElementById('ex-subj').value,dateRaw=document.getElementById('ex-date').value,time=document.getElementById('ex-time').value,room=document.getElementById('ex-room').value.trim();
+  const date=parseFlexibleDateInput(dateRaw);
+  if(!dateRaw){toast('أدخل التاريخ','danger');return}
+  if(!date){toast('أدخل التاريخ بصيغة صحيحة: '+DATE_HINT,'danger');return}
+  D.exams.push(normalizeExam({id:uid(),subjectId:sid,date,time,room}));
+  save();cm('m-exam');renderDash();if(curPage==='schedule')renderSched();toast('تمت إضافة الاختبار','ok')
+}
+
+function renderSettings(){
+  const pg=document.getElementById('pg-settings');
+  let h=`<div class="card"><div class="card-title">النوم والتركيز | Sleep & Focus</div>
+    <div class="srow"><span class="slabel">وقت النوم </span><input type="time" class="ti" value="${esc(D.settings.sleepStart)}" onchange="updSet('sleepStart',this.value)"></div>
+    <div class="srow"><span class="slabel">وقت الاستيقاظ ️</span><input type="time" class="ti" value="${esc(D.settings.sleepEnd)}" onchange="updSet('sleepEnd',this.value)"></div>
+    <div class="srow"><span class="slabel">أفضل وقت تركيز </span><div style="display:flex;gap:5px;align-items:center"><input type="time" class="ti" value="${esc(D.settings.focusStart)}" onchange="updSet('focusStart',this.value)"><span style="font-size:12px;color:var(--text3)">—</span><input type="time" class="ti" value="${esc(D.settings.focusEnd)}" onchange="updSet('focusEnd',this.value)"></div></div>
+  </div>
+  <div class="card"><div class="card-title">تواريخ الفصل الدراسي</div>
+    <div class="srow"><span class="slabel">بداية الفصل</span><div style="flex:1"><input type="text" inputmode="numeric" class="ti" placeholder="2026-05-04 أو 1447-11-17" value="${esc(displayDateInputValue(D.settings.semesterStart||''))}" onchange="updDateSet('semesterStart',this.value,this)"><div class="date-help">ميلادي أو هجري</div></div></div>
+    <div class="srow"><span class="slabel">نهاية الفصل</span><div style="flex:1"><input type="text" inputmode="numeric" class="ti" placeholder="2026-05-04 أو 1447-11-17" value="${esc(displayDateInputValue(D.settings.semesterEnd||''))}" onchange="updDateSet('semesterEnd',this.value,this)"><div class="date-help">ميلادي أو هجري</div></div></div>
+  </div>
+  <div class="card"><div class="card-title">إدارة البيانات</div>
+    <div class="kv"><div><div style="font-weight:600">تصدير البيانات</div><div class="muted">حفظ نسخة احتياطية JSON</div></div><button class="btn btn-s" onclick="exportData()">Export data</button></div>
+    <div class="kv"><div><div style="font-weight:600">استيراد البيانات</div><div class="muted">دمج الحقول الناقصة مع القيم الافتراضية</div></div><button class="btn btn-s" onclick="triggerImport()">Import data</button></div>
+    <div class="kv"><div><div style="font-weight:600">إعادة ضبط كاملة</div><div class="muted">يحذف ${SK} و ${NOTIFY_KEY}</div></div><button class="btn btn-d" onclick="resetAllData()">Reset all data</button></div>
+  </div>
+  <div class="card"><div class="sec-hdr" style="margin-bottom:8px"><div class="card-title" style="margin-bottom:0">الالتزامات اليومية | Daily Commitments</div><button class="add-btn" onclick="openAddCommitment()">+ إضافة</button></div>`;
+  if(!D.commitments.length)h+=`<div style="font-size:13px;color:var(--text3);padding:8px 0">لا توجد التزامات مضافة</div>`;
+  else D.commitments.forEach(c=>{const days=(c.days||[]).map(d=>DAYS_S[d]).join('، ');h+=`<div class="ci"><div><div style="font-weight:500">${esc(c.name)}</div><div style="font-size:11px;color:var(--text3);margin-top:2px">${esc(days)} · ${formatTime12Value(c.startTime)} — ${formatTime12Value(c.endTime)}</div></div><button class="del-btn" onclick="delCommit('${c.id}')"></button></div>`});
+  h+='</div>';
+  pg.innerHTML=h;
+}
+function updSet(k,v){D.settings[k]=v;save();if(curPage==='dashboard')renderDash();if(curPage==='schedule')renderSched();toast('تم تحديث الإعدادات','ok')}
+function updDateSet(k,v,el){const iso=parseFlexibleDateInput(v);if(!v){D.settings[k]='';save();if(curPage==='dashboard')renderDash();if(curPage==='schedule')renderSched();toast('تم تحديث الإعدادات','ok');return}if(!iso){toast('أدخل التاريخ بصيغة صحيحة: '+DATE_HINT,'danger');if(el)el.value=displayDateInputValue(D.settings[k]||'');return}D.settings[k]=iso;if(el)el.value=displayDateInputValue(iso);save();if(curPage==='dashboard')renderDash();if(curPage==='schedule')renderSched();toast('تم تحديث الإعدادات','ok')}
+function openAddCommitment(){coDays=[0,1,2,3,4,5,6];rDays('co-days',coDays,'co');document.getElementById('co-type').value='exercise';document.getElementById('co-name').value='';document.getElementById('co-custom').style.display='none';document.getElementById('co-start').value='07:00';document.getElementById('co-end').value='08:00';om('m-commit')}
+function commitTypeChange(){const t=document.getElementById('co-type').value;document.getElementById('co-custom').style.display=(t==='other'||t==='work')?'block':'none';const times={exercise:['07:00','08:00'],work:['09:00','17:00']};if(times[t]){document.getElementById('co-start').value=times[t][0];document.getElementById('co-end').value=times[t][1]}}
+function saveCommitment(){
+  const t=document.getElementById('co-type').value;
+  const names={exercise:'رياضة ',work:'عمل',other:''};
+  const name=(t==='other'||t==='work')?document.getElementById('co-name').value.trim()||names[t]:names[t];
+  const st=document.getElementById('co-start').value,en=document.getElementById('co-end').value;
+  if(!coDays.length){toast('اختر أيام الالتزام','danger');return}
+  D.commitments.push(normalizeCommitment({id:uid(),name,type:t,days:[...coDays],startTime:st,endTime:en}));
+  save();cm('m-commit');renderSettings();if(curPage==='dashboard')renderDash();if(curPage==='schedule')renderSched();toast('تم حفظ الالتزام','ok')
+}
+function delCommit(id){D.commitments=D.commitments.filter(c=>c.id!==id);save();renderSettings();if(curPage==='dashboard')renderDash();if(curPage==='schedule')renderSched();toast('تم حذف الالتزام','ok')}
+
+function exportData(){
+  const blob=new Blob([JSON.stringify(D,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='study_planner_backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);toast('تم تصدير البيانات','ok')
+}
+function triggerImport(){document.getElementById('import-file').click()}
+document.getElementById('import-file').addEventListener('change',async e=>{
+  const file=e.target.files&&e.target.files[0]; if(!file)return;
+  try{
+    const txt=await file.text();
+    const parsed=JSON.parse(txt);
+    D=normalizeData({...D,...parsed,settings:{...D.settings,...(parsed.settings||{})}});
+    save();
+    toast('تم استيراد البيانات بنجاح','ok');
+    setTimeout(()=>location.reload(),500);
+  }catch(err){toast('ملف غير صالح أو لا يمكن قراءته','danger')}
+  e.target.value='';
+});
+function resetAllData(){
+  if(!confirm('هل تريد حذف جميع البيانات المحفوظة؟'))return;
+  localStorage.removeItem(SK);localStorage.removeItem(NOTIFY_KEY);toast('تمت إعادة الضبط','ok');setTimeout(()=>location.reload(),400)
+}
+
+async function requestNotificationsIfNeeded(){
+  if(!('Notification' in window))return;
+  if(Notification.permission==='default'){
+    try{await Notification.requestPermission()}catch(e){}
+  }
+}
+async function pushNotification(title,body){
+  if(!('Notification' in window)||Notification.permission!=='granted')return;
+  try{
+    if(swReg&&swReg.showNotification)await swReg.showNotification(title,{body,icon:'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="40" fill="%23534AB7"/><text x="96" y="118" font-size="84" text-anchor="middle" fill="white"></text></svg>'});
+    else new Notification(title,{body});
+  }catch(e){}
+}
+async function checkNotifications(){
+  const todayStr=fmtDateInput(new Date());
+  const map=loadNotified();
+  const today=startOfDay(new Date());
+  const send=[];
+  D.assignments.forEach(a=>{
+    const due=parseDateOnly(a.due);if(!due||due<today)return;
+    const dl=diffDays(today,due);if(dl!==1)return;
+    if(map[a.id]===todayStr)return;
+    const s=subjById(a.subjectId);send.push({id:a.id,title:'تذكير واجب',body:`${a.title} لمادة ${s?s.nameAr:'—'} غداً`});
+  });
+  D.exams.forEach(e=>{
+    const d=parseDateOnly(e.date);if(!d||d<today)return;
+    const dl=diffDays(today,d);if(dl!==3)return;
+    if(map[e.id]===todayStr)return;
+    const s=subjById(e.subjectId);send.push({id:e.id,title:'تذكير اختبار',body:`اختبار ${s?s.nameAr:'—'} بعد 3 أيام`});
+  });
+  for(const item of send){await pushNotification(item.title,item.body);map[item.id]=todayStr}
+  saveNotified(map);
+}
+
+async function registerInlinePWA(){
+  if(!('serviceWorker' in navigator))return;
+  const swCode=`
+    const CACHE='study-planner-v3';
+    self.addEventListener('install',event=>{
+      event.waitUntil((async()=>{
+        const cache=await caches.open(CACHE);
+        const clientsArr=await self.clients.matchAll({includeUncontrolled:true,type:'window'});
+        const urls=[...new Set(clientsArr.map(c=>c.url.split('#')[0]).filter(Boolean))];
+        await Promise.all(urls.map(u=>cache.add(u).catch(()=>null)));
+        await self.skipWaiting();
+      })());
+    });
+    self.addEventListener('activate',event=>event.waitUntil(self.clients.claim()));
+    self.addEventListener('fetch',event=>{
+      if(event.request.method!=='GET')return;
+      event.respondWith((async()=>{
+        const cache=await caches.open(CACHE);
+        const cached=await cache.match(event.request,{ignoreSearch:false});
+        if(cached)return cached;
+        try{
+          const fresh=await fetch(event.request);
+          if(event.request.mode==='navigate'||event.request.destination==='document')cache.put(event.request,fresh.clone()).catch(()=>null);
+          return fresh;
+        }catch(err){
+          const fallback=await cache.match(location.origin+'/') || await cache.match('./');
+          if(fallback)return fallback;
+          throw err;
+        }
+      })());
+    });`;
+  try{
+    const blobUrl=URL.createObjectURL(new Blob([swCode],{type:'text/javascript'}));
+    swReg=await navigator.serviceWorker.register(blobUrl,{scope:'./'});
+  }catch(e){/* silent */}
+}
+
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();toast('التطبيق جاهز للتثبيت من قائمة المتصفح','info')});
+
+
+/* ============== STUDY PLANNER v3 ADDITIONS ============== */
+function safeGet(key,fallback){try{const r=localStorage.getItem(key);return r?JSON.parse(r):fallback}catch{return fallback}}
+function safeSet(key,value){try{localStorage.setItem(key,JSON.stringify(value))}catch(e){try{toast(t('errors.storageQuota'),'danger')}catch{}}}
+function safeGetRaw(key,fallback){try{const r=localStorage.getItem(key);return r==null?fallback:r}catch{return fallback}}
+function safeSetRaw(key,value){try{localStorage.setItem(key,value)}catch(e){try{toast(t('errors.storageQuota'),'danger')}catch{}}}
+function runMigrations(){
+  let v=parseInt(safeGetRaw('study_planner_schema_version','1'),10);
+  if(isNaN(v))v=1;
+  if(v<2){
+    try{
+      (D.subjects||[]).forEach(s=>(s.gradeComponents||[]).forEach(c=>{if(!('actualScore'in c))c.actualScore=null}));
+      (D.assignments||[]).forEach(a=>{if(!a.priority)a.priority='medium'});
+      (D.exams||[]).forEach(e=>{if(!e.priority)e.priority='medium'});
+      save();
+    }catch{}
+    safeSetRaw('study_planner_schema_version','2');
+  }
+}
+const translations={
+  ar:{
+    nav:{dashboard:"لوحة التحكم",schedule:"الجدول",subjects:"المواد",settings:"الإعدادات"},
+    actions:{addSubject:"إضافة مادة",save:"حفظ",cancel:"إلغاء",send:"إرسال",clearChat:"مسح المحادثة",exportSchedule:"تصدير الجدول والمواعيد",exportBackup:"تصدير نسخة احتياطية من البيانات",importBackup:"استيراد نسخة احتياطية",close:"إغلاق",dismiss:"إخفاء"},
+    empty:{startBySubject:"ابدأ بإضافة مادة",startBySubjectBody:"أضف موادك أولًا حتى تتمكن من إنشاء جلسات وواجبات واختبارات.",noSubjectsYet:"لا توجد مواد بعد",noSubjectsBody:"اضغط على + لإضافة أول مادة.",nothingUrgent:"لا يوجد شيء عاجل اليوم"},
+    errors:{storageQuota:"لا توجد مساحة كافية في المتصفح لحفظ البيانات",addKeyFirst:"أضف مفتاح Gemini API من الإعدادات أولًا",invalidKey:"مفتاح API غير صالح",keyRejected:"المفتاح مرفوض، تحقق من الإعدادات",rateLimit:"تم تجاوز الحد، حاول لاحقًا",serviceUnavailable:"الخدمة غير متاحة الآن",safetyBlock:"تعذر الرد على هذا السؤال",networkError:"تحقق من الاتصال",generic:"حدث خطأ، حاول مرة أخرى",weightsNot100:"مجموع الأوزان يجب أن يساوي 100",scoreExceedsMax:"الدرجة المدخلة أكبر من الدرجة الكاملة",missingComponentName:"أدخل اسم المكوّن",maxScoreZero:"الدرجة الكاملة يجب أن تكون أكبر من صفر",importVersionNewer:"ملف النسخ الاحتياطي أحدث من الإصدار الحالي",importInvalidFile:"ملف النسخ الاحتياطي غير صالح"},
+    chat:{title:"المساعد الدراسي",placeholder:"اسأل مساعدك الدراسي...",typing:"يكتب...",rateLimitWarning:"قد تكون قريبًا من الحد اليومي المجاني",clearConfirm:"هل تريد مسح المحادثة؟",geminiKeyNote:"يتم حفظ مفتاح Gemini محليًا في متصفحك فقط ولا يُرسل إلى أي خادم.",openSettings:"افتح الإعدادات"},
+    guard:{addSubjectFirst:"أضف مادة أولًا"},
+    priority:{high:"أولوية عالية",medium:"أولوية متوسطة",low:"أولوية منخفضة"},
+    overview:{title:"نظرة اليوم",todaySessions:"حصص اليوم",upcomingExams:"اختبارات قادمة",overdueAssignments:"واجبات متأخرة",recommended:"الإجراء المقترح"},
+    settings:{geminiKey:"مفتاح Gemini API",show:"إظهار",hide:"إخفاء",dataMgmt:"إدارة البيانات",appearance:"اللغة"},
+    schedule:{swipeHint:"اسحب للجانب لرؤية كامل الجدول"},
+    common:{today:"اليوم",tomorrow:"غدًا",days:"أيام",day:"يوم",overdue:"متأخر",noKey:"أضف مفتاح Gemini API من الإعدادات أولًا"}
+  },
+  en:{
+    nav:{dashboard:"Dashboard",schedule:"Schedule",subjects:"Subjects",settings:"Settings"},
+    actions:{addSubject:"Add Subject",save:"Save",cancel:"Cancel",send:"Send",clearChat:"Clear chat",exportSchedule:"Export schedule and deadlines",exportBackup:"Export data backup",importBackup:"Import backup",close:"Close",dismiss:"Dismiss"},
+    empty:{startBySubject:"Start by adding a subject",startBySubjectBody:"Add your subjects first so you can create sessions, assignments, and exams.",noSubjectsYet:"No subjects yet",noSubjectsBody:"Tap + to add your first subject.",nothingUrgent:"Nothing urgent today"},
+    errors:{storageQuota:"Not enough browser storage to save data",addKeyFirst:"Add your Gemini API key in Settings first",invalidKey:"Invalid API key",keyRejected:"Key rejected, check Settings",rateLimit:"Rate limit reached, try again later",serviceUnavailable:"Service unavailable, try again",safetyBlock:"Unable to respond to that prompt",networkError:"Check your connection",generic:"Something went wrong, try again",weightsNot100:"Total weights must equal 100",scoreExceedsMax:"Actual score cannot exceed the maximum",missingComponentName:"Enter component name",maxScoreZero:"Maximum score must be greater than zero",importVersionNewer:"Backup file is newer than the current app version",importInvalidFile:"Invalid backup file"},
+    chat:{title:"Study Assistant",placeholder:"Ask your study assistant...",typing:"Typing...",rateLimitWarning:"You may be approaching the free daily limit",clearConfirm:"Clear all chat history?",geminiKeyNote:"Your Gemini key is stored locally in your browser only and is never sent to any server.",openSettings:"Open Settings"},
+    guard:{addSubjectFirst:"Add a subject first"},
+    priority:{high:"High priority",medium:"Medium priority",low:"Low priority"},
+    overview:{title:"Today's Overview",todaySessions:"Today's classes",upcomingExams:"Upcoming exams",overdueAssignments:"Overdue assignments",recommended:"Recommended next action"},
+    settings:{geminiKey:"Gemini API Key",show:"Show",hide:"Hide",dataMgmt:"Data Management",appearance:"Language"},
+    schedule:{swipeHint:"Swipe to see the full schedule"},
+    common:{today:"Today",tomorrow:"Tomorrow",days:"days",day:"day",overdue:"Overdue",noKey:"Add your Gemini API key in Settings first"}
+  }
+};
+let currentLang=safeGetRaw('study_planner_lang','ar');
+if(currentLang!=='ar'&&currentLang!=='en')currentLang='ar';
+function t(key){return key.split('.').reduce((o,k)=>o&&o[k],translations[currentLang])??key}
+function applyLangToDocument(){
+  document.documentElement.dir=currentLang==='ar'?'rtl':'ltr';
+  document.documentElement.lang=currentLang;
+  const lt=document.getElementById('lang-toggle');if(lt)lt.textContent=currentLang==='ar'?'EN':'ع';
+  // nav labels
+  const navBtns=document.querySelectorAll('.bnav .ni');
+  const keys=['dashboard','schedule','subjects','settings'];
+  navBtns.forEach((b,i)=>{
+    const txtNode=Array.from(b.childNodes).find(n=>n.nodeType===3&&n.textContent.trim());
+    const lbl=t('nav.'+keys[i]);
+    if(txtNode)txtNode.textContent=lbl; else b.appendChild(document.createTextNode(lbl));
+    b.setAttribute('aria-label',lbl);
+  });
+  // Page title
+  const ptKeys={dashboard:'nav.dashboard',schedule:'nav.schedule',subjects:'nav.subjects',settings:'nav.settings'};
+  const pt=document.getElementById('page-title');if(pt&&ptKeys[curPage])pt.textContent=t(ptKeys[curPage]);
+  // chat labels
+  const cb=document.getElementById('chat-clear-btn');if(cb)cb.textContent=t('actions.clearChat');
+  const cs=document.getElementById('chat-send-btn');if(cs)cs.textContent=t('actions.send');
+  const ci=document.getElementById('chat-input');if(ci)ci.placeholder=t('chat.placeholder');
+  const ct=document.getElementById('chat-title');if(ct)ct.textContent=t('chat.title');
+  const fab=document.querySelector('.fab');if(fab)fab.setAttribute('aria-label',currentLang==='ar'?'إضافة':'Add');
+  const bc=document.getElementById('btn-chat');if(bc)bc.setAttribute('aria-label',t('chat.title'));
+}
+function toggleLang(){
+  currentLang=currentLang==='ar'?'en':'ar';
+  safeSetRaw('study_planner_lang',currentLang);
+  applyLangToDocument();
+  rerenderAll();
+}
+function rerenderAll(){
+  try{updateTopbarDate&&updateTopbarDate()}catch{}
+  if(curPage==='dashboard')renderDash();
+  else if(curPage==='schedule')renderSched();
+  else if(curPage==='subjects')renderSubjs();
+  else if(curPage==='settings')renderSettings();
+  if(!document.getElementById('chat-panel').classList.contains('hidden'))renderChatBody();
+}
+function subjectName(id){const s=(D.subjects||[]).find(x=>x.id===id);if(!s)return '—';return currentLang==='ar'?(s.nameAr||s.nameEn||'—'):(s.nameEn||s.nameAr||'—')}
+
+/* ---- Subject-first guard for FAB ---- */
+const _origOpenFAB=typeof openFAB==='function'?openFAB:null;
+openFAB=function(){
+  if((D.subjects||[]).length===0){
+    om('m-fab');
+    setTimeout(applyFabGuard,0);
+    return;
+  }
+  applyFabGuard();
+  om('m-fab');
+};
+function applyFabGuard(){
+  const modal=document.getElementById('m-fab');if(!modal)return;
+  const btns=modal.querySelectorAll('button.btn');
+  const noSubjects=(D.subjects||[]).length===0;
+  btns.forEach((b,i)=>{
+    b.classList.remove('fab-menu-disabled');b.removeAttribute('title');
+    if(noSubjects&&i>0){b.classList.add('fab-menu-disabled');b.setAttribute('title',t('guard.addSubjectFirst'))}
+  });
+}
+
+/* ---- Priority logic ---- */
+function priorityScore(item,today){
+  const dateStr=item.due||item.date;if(!dateStr)return 0;
+  const d=new Date(dateStr);const days=Math.ceil((d-today)/86400000);
+  let s=0;if(days<0)s+=100;else s+=Math.max(0,30-days);
+  if(item.__type==='exam')s+=15;
+  return s;
+}
+function priorityLabel(score){if(score>=80)return 'high';if(score>=30)return 'medium';return 'low'}
+
+/* ---- Today's Overview card (prepended into renderDash) ---- */
+const _origRenderDash=renderDash;
+renderDash=function(){
+  _origRenderDash();
+  const pg=document.getElementById('pg-dashboard');if(!pg)return;
+  // Inject empty-state if no subjects
+  if((D.subjects||[]).length===0){
+    pg.innerHTML=`<div class="empty-card"><h3>${esc(t('empty.startBySubject'))}</h3><p>${esc(t('empty.startBySubjectBody'))}</p><button class="btn btn-p" onclick="openAddSubject()">${esc(t('actions.addSubject'))}</button></div>`;
+    return;
+  }
+  // Build Today's Overview card
+  const today=startOfDay(new Date());
+  const dayIdx=today.getDay();
+  const todaySessions=(D.classes||[]).filter(c=>c.days&&c.days.includes(dayIdx));
+  const upcomingExams=(D.exams||[]).filter(e=>{const d=new Date(e.date);if(isNaN(d))return false;const diff=Math.ceil((d-today)/86400000);return diff>=0&&diff<=7}).sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const todayStr=today.toISOString().split('T')[0];
+  const overdue=(D.assignments||[]).filter(a=>!a.completed&&a.due&&a.due<todayStr);
+  const recItems=[
+    ...overdue.map(a=>({...a,__type:'assignment'})),
+    ...upcomingExams.map(e=>({...e,__type:'exam'})),
+    ...(D.assignments||[]).filter(a=>!a.completed&&a.due&&a.due>=todayStr).map(a=>({...a,__type:'assignment'}))
+  ];
+  let recommended=null;let bestScore=-1;
+  recItems.forEach(it=>{const s=priorityScore(it,today);if(s>bestScore){bestScore=s;recommended=it}});
+  const allEmpty=todaySessions.length===0&&upcomingExams.length===0&&overdue.length===0;
+  let card=`<div class="card"><div class="card-title">${esc(t('overview.title'))}</div>`;
+  if(allEmpty){
+    card+=`<div class="empty">${esc(t('empty.nothingUrgent'))}</div></div>`;
+    pg.insertAdjacentHTML('afterbegin',card);
+    return;
+  }
+  if(todaySessions.length){
+    card+=`<div style="margin-bottom:10px"><div class="muted" style="margin-bottom:6px">${esc(t('overview.todaySessions'))}</div>`;
+    todaySessions.forEach(c=>{const s=subjById(c.subjectId);if(!s)return;card+=`<div class="today-item"><div class="tcolor" style="background:${s.color}"></div><div class="tinfo"><div class="tname">${esc(subjectName(s.id))}</div><div class="tmeta">${formatTime12Value(c.startTime)} - ${formatTime12Value(c.endTime)}</div></div></div>`});
+    card+='</div>';
+  }
+  if(overdue.length){
+    card+=`<div style="margin-bottom:10px"><div class="muted" style="margin-bottom:6px">${esc(t('overview.overdueAssignments'))}</div>`;
+    overdue.slice(0,4).forEach(a=>{card+=`<div class="today-item"><div class="tcolor" style="background:var(--priority-high)"></div><div class="tinfo"><div class="tname">${esc(a.title||'')}</div><div class="tmeta">${esc(subjectName(a.subjectId))} · ${esc(a.due)}</div></div><span class="chip chip--prio-high">${esc(t('common.overdue'))}</span></div>`});
+    card+='</div>';
+  }
+  if(upcomingExams.length){
+    card+=`<div style="margin-bottom:10px"><div class="muted" style="margin-bottom:6px">${esc(t('overview.upcomingExams'))}</div>`;
+    upcomingExams.slice(0,4).forEach(e=>{const days=Math.ceil((new Date(e.date)-today)/86400000);const lbl=days===0?t('common.today'):days===1?t('common.tomorrow'):(days+' '+(days===1?t('common.day'):t('common.days')));card+=`<div class="today-item"><div class="tcolor" style="background:var(--accent)"></div><div class="tinfo"><div class="tname">${esc(subjectName(e.subjectId))}</div><div class="tmeta">${esc(e.date)}${e.time?' · '+esc(e.time):''}</div></div><span class="chip chip--prio-med">${esc(lbl)}</span></div>`});
+    card+='</div>';
+  }
+  if(recommended){
+    const lbl=priorityLabel(bestScore);
+    const txt=recommended.__type==='exam'?subjectName(recommended.subjectId):(recommended.title||'');
+    card+=`<div style="border-top:1px solid var(--border);padding-top:10px"><div class="muted" style="margin-bottom:4px">${esc(t('overview.recommended'))}</div><div style="display:flex;align-items:center;gap:8px"><span class="tname">${esc(txt)}</span><span class="chip chip--prio-${lbl==='high'?'high':lbl==='medium'?'med':'low'}">${esc(t('priority.'+lbl))}</span></div></div>`;
+  }
+  card+='</div>';
+  pg.insertAdjacentHTML('afterbegin',card);
+};
+
+/* ---- Subjects empty state ---- */
+const _origRenderSubjs=renderSubjs;
+renderSubjs=function(){
+  if((D.subjects||[]).length===0){
+    const pg=document.getElementById('pg-subjects');
+    pg.innerHTML=`<div class="empty-card"><h3>${esc(t('empty.noSubjectsYet'))}</h3><p>${esc(t('empty.noSubjectsBody'))}</p><button class="btn btn-p" onclick="openAddSubject()">${esc(t('actions.addSubject'))}</button></div>`;
+    return;
+  }
+  _origRenderSubjs();
+  // Append grade chips next to subject names
+  document.querySelectorAll('#pg-subjects .subj-card').forEach((card,i)=>{
+    const s=D.subjects[i];if(!s)return;
+    const chip=buildGradeChip(s);
+    if(!chip)return;
+    const nameEl=card.querySelector('.sname');
+    if(nameEl&&!nameEl.querySelector('.chip'))nameEl.insertAdjacentHTML('beforeend',chip);
+  });
+};
+function buildGradeChip(s){
+  const comps=(s.gradeComponents||[]).filter(c=>{
+    const v=c.actualScore!=null?c.actualScore:c.earned;
+    return v!==''&&v!=null&&!isNaN(parseFloat(v));
+  });
+  if(!comps.length)return '';
+  const totalComps=(s.gradeComponents||[]).length;
+  let earned=0,outOf=0;
+  comps.forEach(c=>{
+    const max=parseFloat(c.max)||0;
+    const v=parseFloat(c.actualScore!=null?c.actualScore:c.earned);
+    const w=parseFloat(c.weight)||max||0;
+    if(max>0){earned+=(v/max)*w;outOf+=w}
+  });
+  const fully=comps.length===totalComps&&totalComps>0;
+  if(fully&&outOf>0){
+    const pct=Math.round((earned/outOf)*100);
+    const cls=pct>=85?'chip--grade-good':pct>=60?'chip--grade-ok':'chip--grade-low';
+    return ` <span class="chip ${cls}">${pct}%</span>`;
+  }
+  return ` <span class="chip chip--neutral">${earned.toFixed(1)} / ${outOf.toFixed(0)}</span>`;
+}
+
+/* ---- Schedule swipe hint ---- */
+const _origRenderSched=renderSched;
+renderSched=function(){
+  _origRenderSched();
+  const pg=document.getElementById('pg-schedule');
+  if(safeGetRaw('schedule_hint_seen','0')==='1')return;
+  const hint=document.createElement('div');
+  hint.className='sched-hint';
+  hint.innerHTML=`<span>${esc(t('schedule.swipeHint'))}</span><button onclick="dismissSchedHint(this)" aria-label="${esc(t('actions.dismiss'))}">✕</button>`;
+  pg.insertBefore(hint,pg.firstChild);
+};
+function dismissSchedHint(btn){safeSetRaw('schedule_hint_seen','1');btn.closest('.sched-hint').remove()}
+
+/* ---- Schedule export (printable) ---- */
+function exportSchedulePrintable(){
+  const lang=currentLang;const dir=lang==='ar'?'rtl':'ltr';
+  const dayLabels=lang==='ar'?DAYS_AR:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const today=startOfDay(new Date());
+  const todayStr=today.toISOString().split('T')[0];
+  const in30=new Date(today.getTime()+30*86400000).toISOString().split('T')[0];
+  const headers=lang==='ar'
+    ?{sessions:'الحصص الأسبوعية',subj:'المادة',day:'اليوم',from:'من',to:'إلى',notes:'ملاحظات',assigns:'الواجبات القادمة (30 يومًا)',title:'العنوان',due:'التاريخ',status:'الحالة',exams:'الاختبارات القادمة (30 يومًا)',name:'الاسم',date:'التاريخ',time:'الوقت',done:'مكتمل',pending:'قيد التنفيذ'}
+    :{sessions:'Weekly Sessions',subj:'Subject',day:'Day',from:'Start',to:'End',notes:'Notes',assigns:'Upcoming Assignments (30 days)',title:'Title',due:'Due Date',status:'Status',exams:'Upcoming Exams (30 days)',name:'Name',date:'Date',time:'Time',done:'Done',pending:'Pending'};
+  function table(title,rows,cols){
+    let h=`<h2>${esc(title)}</h2><table><thead><tr>`+cols.map(c=>`<th>${esc(c)}</th>`).join('')+'</tr></thead><tbody>';
+    if(!rows.length)h+=`<tr><td colspan="${cols.length}" style="text-align:center;color:#888">—</td></tr>`;
+    else rows.forEach(r=>{h+='<tr>'+r.map(v=>`<td>${esc(v||'')}</td>`).join('')+'</tr>'});
+    return h+'</tbody></table>';
+  }
+  const sRows=(D.classes||[]).map(c=>{const s=subjById(c.subjectId);return [s?subjectName(s.id):'—',dayLabels[(c.days||[])[0]||0],c.startTime,c.endTime,c.room||'']});
+  const aRows=(D.assignments||[]).filter(a=>a.due>=todayStr&&a.due<=in30).sort((a,b)=>a.due.localeCompare(b.due)).map(a=>[a.title,subjectName(a.subjectId),a.due,a.completed?headers.done:headers.pending]);
+  const eRows=(D.exams||[]).filter(e=>e.date>=todayStr&&e.date<=in30).sort((a,b)=>a.date.localeCompare(b.date)).map(e=>[subjectName(e.subjectId),subjectName(e.subjectId),e.date,e.time||'']);
+  const html=`<!DOCTYPE html><html lang="${lang}" dir="${dir}"><head><meta charset="UTF-8"><title>${esc(t('actions.exportSchedule'))}</title><style>body{font-family:system-ui,sans-serif;direction:${dir};padding:2rem;color:#1a1a1a}table{width:100%;border-collapse:collapse;margin-bottom:2rem}th,td{border:1px solid #ccc;padding:.5rem .75rem;text-align:start}th{background:#f3f4f6}h2{color:#534AB7;margin:1rem 0 .5rem}h1{color:#534AB7}</style></head><body><h1>${esc(t('actions.exportSchedule'))}</h1>${table(headers.sessions,sRows,[headers.subj,headers.day,headers.from,headers.to,headers.notes])}${table(headers.assigns,aRows,[headers.title,headers.subj,headers.due,headers.status])}${table(headers.exams,eRows,[headers.name,headers.subj,headers.date,headers.time])}<script>window.onload=function(){setTimeout(window.print,300)}<\/script></body></html>`;
+  const w=window.open('','_blank');w.document.write(html);w.document.close();
+}
+
+/* ---- JSON backup export/import (v3 spec) ---- */
+const EXPORT_KEYS_V3=['subjects','sessions','assignments','exams','commitments','settings','study_planner_schema_version','study_planner_lang','classes','aiSchedule'];
+function exportBackupV3(){
+  const out={
+    exportedAt:new Date().toISOString(),
+    appVersion:2,
+    study_planner_schema_version:parseInt(safeGetRaw('study_planner_schema_version','2'),10),
+    study_planner_lang:currentLang,
+    subjects:D.subjects||[],sessions:[],classes:D.classes||[],
+    assignments:D.assignments||[],exams:D.exams||[],
+    commitments:D.commitments||[],settings:D.settings||{},aiSchedule:D.aiSchedule||[]
+  };
+  // never include gemini_api_key
+  const blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='study_planner_backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);
+  toast(currentLang==='ar'?'تم تصدير البيانات':'Backup exported','ok');
+}
+function importBackupV3(json){
+  let data;try{data=JSON.parse(json)}catch{toast(t('errors.importInvalidFile'),'danger');return}
+  const fileVersion=parseInt(data.appVersion??data.study_planner_schema_version??'1',10);
+  if(typeof data!=='object'||!Array.isArray(data.subjects)){toast(t('errors.importInvalidFile'),'danger');return}
+  if(!isNaN(fileVersion)&&fileVersion>2){toast(t('errors.importVersionNewer'),'danger');return}
+  if(Array.isArray(data.subjects))D.subjects=data.subjects;
+  if(Array.isArray(data.classes))D.classes=data.classes;
+  if(Array.isArray(data.assignments))D.assignments=data.assignments;
+  if(Array.isArray(data.exams))D.exams=data.exams;
+  if(Array.isArray(data.commitments))D.commitments=data.commitments;
+  if(data.settings&&typeof data.settings==='object')D.settings={...D.settings,...data.settings};
+  if(Array.isArray(data.aiSchedule))D.aiSchedule=data.aiSchedule;
+  if(data.study_planner_lang){currentLang=data.study_planner_lang;safeSetRaw('study_planner_lang',currentLang)}
+  save();runMigrations();applyLangToDocument();rerenderAll();
+  toast(currentLang==='ar'?'تم استيراد البيانات':'Backup imported','ok');
+}
+
+/* ---- Settings additions: language, gemini key, export schedule ---- */
+const _origRenderSettings=renderSettings;
+renderSettings=function(){
+  _origRenderSettings();
+  const pg=document.getElementById('pg-settings');if(!pg)return;
+  const extra=document.createElement('div');
+  extra.className='card';
+  extra.innerHTML=`
+    <div class="card-title">${esc(t('settings.appearance'))}</div>
+    <div class="srow"><span class="slabel">Language / اللغة</span><button class="btn btn-s" onclick="toggleLang()">${currentLang==='ar'?'English':'العربية'}</button></div>
+    <div class="card-title" style="margin-top:14px">${esc(t('settings.dataMgmt'))}</div>
+    <div class="srow"><span class="slabel">${esc(t('actions.exportBackup'))}</span><button class="btn btn-s" onclick="exportBackupV3()">${esc(t('actions.exportBackup'))}</button></div>
+    <div class="srow"><span class="slabel">${esc(t('actions.exportSchedule'))}</span><button class="btn btn-s" onclick="exportSchedulePrintable()">${esc(t('actions.exportSchedule'))}</button></div>
+    <div class="srow"><span class="slabel">${esc(t('actions.importBackup'))}</span><button class="btn btn-s" onclick="triggerImportV3()">${esc(t('actions.importBackup'))}</button></div>`;
+  pg.insertBefore(extra,pg.firstChild);
+};
+function toggleGeminiKeyVis(btn){const i=document.getElementById('gemini-key-input');if(!i)return;if(i.type==='password'){i.type='text';btn.textContent=t('settings.hide')}else{i.type='password';btn.textContent=t('settings.show')}}
+function saveGeminiKey(){const v=document.getElementById('gemini-key-input').value.trim();safeSetRaw('gemini_api_key',v);toast(currentLang==='ar'?'تم حفظ المفتاح':'Key saved','ok')}
+function triggerImportV3(){
+  const inp=document.createElement('input');inp.type='file';inp.accept='application/json';
+  inp.onchange=async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const txt=await f.text();importBackupV3(txt)};
+  inp.click();
+}
+
+/* ---- Gemini Chat ---- */
+const GEMINI_MODEL='gemini-2.0-flash';
+let chatSessionMessageCount=0,chatWarningShown=false;
+function getChatHistory(){return safeGet('study_planner_chat_history',[])}
+function setChatHistory(h){const trimmed=h.slice(-50);safeSet('study_planner_chat_history',trimmed)}
+function openChat(){
+  const panel=document.getElementById('chat-panel');panel.classList.remove('hidden');
+  applyLangToDocument();renderChatBody();
+  setTimeout(()=>document.getElementById('chat-input').focus(),50);
+}
+function closeChat(){document.getElementById('chat-panel').classList.add('hidden')}
+function clearChat(){if(!confirm(t('chat.clearConfirm')))return;setChatHistory([]);chatSessionMessageCount=0;chatWarningShown=false;document.getElementById('chat-warn-slot').innerHTML='';renderChatBody()}
+function renderChatBody(){
+  const body=document.getElementById('chat-body');if(!body)return;
+  const hist=getChatHistory();
+  body.innerHTML=hist.map(m=>renderChatMessage(m)).join('');
+  body.scrollTop=body.scrollHeight;
+}
+function renderChatMessage(m){
+  if(m.role==='user')return `<div class="chat-msg user">${esc(m.text)}</div>`;
+  const html=(typeof marked!=='undefined'&&typeof DOMPurify!=='undefined')?DOMPurify.sanitize(marked.parse(m.text||'')):esc(m.text||'');
+  return `<div class="chat-msg bot"><div class="markdown-body">${html}</div></div>`;
+}
+function buildSystemPrompt(){
+  const today=new Date();const iso=today.toISOString().split('T')[0];
+  const day=today.toLocaleDateString(currentLang==='ar'?'ar-SA':'en-US',{weekday:'long'});
+  const subjects=D.subjects||[];const assignments=(D.assignments||[]).filter(a=>!a.completed);
+  const exams=D.exams||[];const sessions=D.classes||[];
+  const subjectNames=subjects.map(s=>currentLang==='ar'?s.nameAr:s.nameEn).join(', ');
+  const next14=exams.filter(e=>{const diff=(new Date(e.date)-today)/86400000;return diff>=0&&diff<=14}).map(e=>`${subjectName(e.subjectId)} — ${e.date}`).join('\n');
+  const pending=assignments.map(a=>`${a.title} — ${subjectName(a.subjectId)} — ${a.due}`).join('\n');
+  const thisWeek=sessions.map(s=>`${subjectName(s.subjectId)} — days ${(s.days||[]).join(',')} — ${s.startTime}`).join('\n');
+  return `You are a study assistant embedded in a bilingual (Arabic/English) study planner app.\nToday: ${iso} (${day}).\nActive language: ${currentLang}.\n\nStudent's subjects: ${subjectNames||'none'}.\nUpcoming exams (next 14 days):\n${next14||'none'}\nPending assignments:\n${pending||'none'}\nThis week's sessions:\n${thisWeek||'none'}\n\nHelp the student plan, prioritize, and learn. You can:\n- suggest study schedules based on workload and deadlines\n- recommend what to study first\n- explain study techniques and break down assignments\n- answer general academic questions\n\nRules:\n- Reply in the same language the user wrote in.\n- Be concise, practical, and supportive.\n- Do not invent data not provided above.\n- Do not claim to modify the planner — you can only suggest.`;
+}
+async function callGemini(userMessage,history){
+  const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),20000);
+  try{
+    const res=await fetch('/api/chat',{
+      method:'POST',signal:controller.signal,
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({systemPrompt:buildSystemPrompt(),history,userMessage})
+    });
+    clearTimeout(timeout);return await handleGeminiResponse(res);
+  }catch(err){clearTimeout(timeout);if(err.name==='AbortError')throw new Error('networkError');throw err}
+}
+async function handleGeminiResponse(res){
+  if(!res.ok){
+    if(res.status===400)throw new Error('invalidKey');
+    if(res.status===401||res.status===403)throw new Error('keyRejected');
+    if(res.status===429)throw new Error('rateLimit');
+    if(res.status>=500)throw new Error('serviceUnavailable');
+    throw new Error('generic');
+  }
+  const data=await res.json();
+  const text=data?.text;
+  if(!text)throw new Error('safetyBlock');
+  return text;
+}
+async function sendChat(){
+  const input=document.getElementById('chat-input');const txt=input.value.trim();if(!txt)return;
+  const hist=getChatHistory();
+  hist.push({role:'user',text:txt});setChatHistory(hist);input.value='';
+  chatSessionMessageCount++;
+  if(chatSessionMessageCount>=20&&!chatWarningShown){
+    chatWarningShown=true;
+    document.getElementById('chat-warn-slot').innerHTML=`<div class="chat-warn">${esc(t('chat.rateLimitWarning'))}</div>`;
+  }
+  renderChatBody();
+  const body=document.getElementById('chat-body');
+  body.insertAdjacentHTML('beforeend',`<div class="chat-msg bot" id="typing-ind"><div class="chat-typing"><span></span><span></span><span></span></div></div>`);
+  body.scrollTop=body.scrollHeight;
+  try{
+    const reply=await callGemini(txt,hist.slice(0,-1));
+    document.getElementById('typing-ind')?.remove();
+    const h2=getChatHistory();h2.push({role:'bot',text:reply});setChatHistory(h2);
+    renderChatBody();
+  }catch(err){
+    document.getElementById('typing-ind')?.remove();
+    const code=err.message;const msg=t('errors.'+code)||t('errors.generic');
+    body.insertAdjacentHTML('beforeend',`<div class="chat-error">${esc(msg)}</div>`);
+    body.scrollTop=body.scrollHeight;
+  }
+}
+
+/* ---- Esc closes topmost modal/chat ---- */
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Escape')return;
+  const cp=document.getElementById('chat-panel');
+  if(cp&&!cp.classList.contains('hidden')){closeChat();return}
+  const open=Array.from(document.querySelectorAll('.modal-ov.open'));
+  if(open.length){cm(open[open.length-1].id)}
+});
+
+/* ---- Init: migrations + lang ---- */
+runMigrations();
+applyLangToDocument();
+/* ============== END v3 ADDITIONS ============== */
+
+load();
+renderDash();
+applyLangToDocument();
+(async()=>{
+  await registerInlinePWA();
+  await requestNotificationsIfNeeded();
+  await checkNotifications();
+})();
+</script>
+</body>
+</html>
