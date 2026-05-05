@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="مخطط المذاكرة">
 <link rel="manifest" href='data:application/manifest+json,{"name":"%D9%85%D8%AE%D8%B7%D8%B7%20%D8%A7%D9%84%D9%85%D8%B0%D8%A7%D9%83%D8%B1%D8%A9","short_name":"%D8%A7%D9%84%D9%85%D8%AE%D8%B7%D8%B7","start_url":".","display":"standalone","background_color":"%23f8f7f4","theme_color":"%23534AB7","lang":"ar","dir":"rtl","icons":[{"src":"data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20192%20192%27%3E%3Crect%20width=%27192%27%20height=%27192%27%20rx=%2744%27%20fill=%27%23534AB7%27/%3E%3Cpath%20d=%27M48%2050h96a8%208%200%200%201%208%208v76a8%208%200%200%201-8%208H48a8%208%200%200%201-8-8V58a8%208%200%200%201%208-8Zm0%2028h96M68%2036v28M124%2036v28M68%2094h22v22H68Zm34%200h22v22h-22Z%27%20fill=%27none%27%20stroke=%27white%27%20stroke-width=%2712%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27/%3E%3C/svg%3E","sizes":"192x192","type":"image/svg+xml","purpose":"any maskable"},{"src":"data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20512%20512%27%3E%3Crect%20width=%27512%27%20height=%27512%27%20rx=%27110%27%20fill=%27%23534AB7%27/%3E%3Cpath%20d=%27M128%20134h256c17.7%200%2032%2014.3%2032%2032v202c0%2017.7-14.3%2032-32%2032H128c-17.7%200-32-14.3-32-32V166c0-17.7%2014.3-32%2032-32Zm0%2074h256M182%2098v74M330%2098v74M182%20250h58v58h-58Zm90%200h58v58h-58Z%27%20fill=%27none%27%20stroke=%27white%27%20stroke-width=%2732%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27/%3E%3C/svg%3E","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}]}' />
-<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=60OxTaiWfw6YzwKMWDBjJJN95BdTeh4Yn-_lC4N-oj1Xck7qd-_rRAF75Icl_8hPpRyaN-cgJ-NtH_PClwr5aF8bXa7ed37zI1dzabYq-oiq4_CAScz2XZi98bca1ik7aY4X1d1rcQlD8cgLEth6LMNCn4lfh_gqxiaU5t097HNr1wldRkqxHVV5FKPh5TMz5WdfekaJP3f1hwMk_Q431y147Cv3YNWaS8XwmgrVBY4UZkg0cBzaczEbsasPVKLf7L6Xm5TT_BofE5ImNK3Ilg" charset="UTF-8"></script><style>
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=tjWawoiE0oF8-0hsFUWKHUu53NEIM7FCzCb8wEULSa4g_QxROSzsFMhCUg3hx2U-2XDNzSU6w9x1NcI-srBGUct0n18aWSwtYWxane_Hr37MBdf5ffXI4kCv_JQ8ECKchYvtfn4HgQffqRTXvbONhJWSXOluUkKhQrQdHC-cg1cjNB0IernLO0Df6aOs3O_d9IDkuhjoH9FyKilAwrv-x_QW7Gc_rdvUCbq-e_ByDhjSkvxcAlqinPlzETX8FOkhdFnaDnhUsAYFtl8snG8eOw" charset="UTF-8"></script><style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#f8f7f4;--surface:#fff;--border:rgba(0,0,0,.1);
@@ -56,6 +56,7 @@ html[data-theme="dark"]{
 .topbar-actions{display:flex;align-items:center;gap:8px}
 .lang-toggle,.theme-toggle{background:var(--accent-l);color:var(--accent);border:1px solid var(--accent);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;min-height:32px}
 .theme-toggle{display:inline-flex;align-items:center;gap:6px}
+select.lang-toggle{appearance:auto;max-width:190px}
 .btn-chat{position:fixed;inset-inline-start:1.25rem;inset-block-end:5rem;width:52px;height:52px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:90;box-shadow:0 4px 16px rgba(83,74,183,.4)}
 .fab{inset-inline-end:1.25rem !important;inset-block-end:5rem !important;inset-inline-start:auto !important;left:auto !important;right:auto !important;bottom:auto !important}
 .sched-hint{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--accent-l);color:var(--accent);border:1px solid var(--accent);border-radius:var(--rs);padding:8px 12px;margin-bottom:10px;font-size:13px}
@@ -267,7 +268,13 @@ html[data-theme="dark"] .chat-msg.bot .markdown-body code{background:rgba(255,25
     </div>
     <div class="topbar-actions">
       <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="الوضع الداكن" title="الوضع الداكن">🌙</button>
-      <button class="lang-toggle" id="lang-toggle" onclick="toggleLang()" aria-label="Language">EN</button>
+      <select class="lang-toggle" id="lang-toggle" onchange="setLang(this.value)" aria-label="Language" title="Language">
+        <option value="ar">العربية</option>
+        <option value="en">English</option>
+        <option value="es">Español</option>
+        <option value="pt-BR">Português (Brasil)</option>
+        <option value="hi">हिन्दी</option>
+      </select>
     </div>
   </div>
   <div class="page active" id="pg-dashboard"></div>
@@ -1308,11 +1315,62 @@ const translations={
     common:{today:"Today",tomorrow:"Tomorrow",days:"days",day:"day",overdue:"Overdue",noKey:"Add your Gemini API key in Settings first"}
   }
 };
+const LANGUAGE_OPTIONS={
+  ar:{label:'العربية',dir:'rtl',locale:'ar-SA',assistant:'Arabic'},
+  en:{label:'English',dir:'ltr',locale:'en-US',assistant:'English'},
+  es:{label:'Español',dir:'ltr',locale:'es-ES',assistant:'Spanish'},
+  'pt-BR':{label:'Português (Brasil)',dir:'ltr',locale:'pt-BR',assistant:'Brazilian Portuguese'},
+  hi:{label:'हिन्दी',dir:'ltr',locale:'hi-IN',assistant:'Hindi'}
+};
+translations.es={
+  nav:{dashboard:'Panel',schedule:'Horario',subjects:'Materias',settings:'Ajustes'},
+  actions:{addSubject:'Agregar materia',save:'Guardar',cancel:'Cancelar',send:'Enviar',clearChat:'Borrar chat',exportSchedule:'Exportar horario y fechas',exportBackup:'Exportar copia de datos',importBackup:'Importar copia de datos',close:'Cerrar',dismiss:'Ocultar'},
+  empty:{startBySubject:'Empieza agregando una materia',startBySubjectBody:'Agrega tus materias primero para crear clases, tareas y exámenes.',noSubjectsYet:'Aún no hay materias',noSubjectsBody:'Pulsa + para agregar tu primera materia.',nothingUrgent:'Nada urgente hoy'},
+  errors:{...translations.en.errors},
+  chat:{title:'Asistente de estudio',placeholder:'Pregunta a tu asistente de estudio...',typing:'Escribiendo...',rateLimitWarning:'Puede que estés cerca del límite diario gratuito',clearConfirm:'¿Borrar todo el historial del chat?',geminiKeyNote:'Tu clave Gemini se guarda solo localmente en tu navegador.',openSettings:'Abrir ajustes'},
+  guard:{addSubjectFirst:'Agrega una materia primero'},
+  priority:{high:'Prioridad alta',medium:'Prioridad media',low:'Prioridad baja'},
+  overview:{title:'Resumen de hoy',todaySessions:'Clases de hoy',upcomingExams:'Exámenes próximos',overdueAssignments:'Tareas vencidas',recommended:'Acción recomendada'},
+  settings:{geminiKey:'Clave API de Gemini',show:'Mostrar',hide:'Ocultar',dataMgmt:'Gestión de datos',appearance:'Idioma'},
+  schedule:{swipeHint:'Desliza para ver todo el horario'},
+  common:{today:'Hoy',tomorrow:'Mañana',days:'días',day:'día',overdue:'Vencido',noKey:'Agrega tu clave API de Gemini en Ajustes primero'}
+};
+translations['pt-BR']={
+  nav:{dashboard:'Painel',schedule:'Agenda',subjects:'Matérias',settings:'Configurações'},
+  actions:{addSubject:'Adicionar matéria',save:'Salvar',cancel:'Cancelar',send:'Enviar',clearChat:'Limpar chat',exportSchedule:'Exportar agenda e prazos',exportBackup:'Exportar backup dos dados',importBackup:'Importar backup',close:'Fechar',dismiss:'Ocultar'},
+  empty:{startBySubject:'Comece adicionando uma matéria',startBySubjectBody:'Adicione suas matérias primeiro para criar aulas, tarefas e provas.',noSubjectsYet:'Ainda não há matérias',noSubjectsBody:'Toque em + para adicionar sua primeira matéria.',nothingUrgent:'Nada urgente hoje'},
+  errors:{...translations.en.errors},
+  chat:{title:'Assistente de estudos',placeholder:'Pergunte ao seu assistente de estudos...',typing:'Digitando...',rateLimitWarning:'Você pode estar perto do limite diário gratuito',clearConfirm:'Limpar todo o histórico do chat?',geminiKeyNote:'Sua chave Gemini fica salva apenas localmente no navegador.',openSettings:'Abrir configurações'},
+  guard:{addSubjectFirst:'Adicione uma matéria primeiro'},
+  priority:{high:'Alta prioridade',medium:'Prioridade média',low:'Baixa prioridade'},
+  overview:{title:'Resumo de hoje',todaySessions:'Aulas de hoje',upcomingExams:'Provas próximas',overdueAssignments:'Tarefas atrasadas',recommended:'Ação recomendada'},
+  settings:{geminiKey:'Chave API Gemini',show:'Mostrar',hide:'Ocultar',dataMgmt:'Gerenciamento de dados',appearance:'Idioma'},
+  schedule:{swipeHint:'Deslize para ver toda a agenda'},
+  common:{today:'Hoje',tomorrow:'Amanhã',days:'dias',day:'dia',overdue:'Atrasado',noKey:'Adicione sua chave API Gemini em Configurações primeiro'}
+};
+translations.hi={
+  nav:{dashboard:'डैशबोर्ड',schedule:'समय-सारणी',subjects:'विषय',settings:'सेटिंग्स'},
+  actions:{addSubject:'विषय जोड़ें',save:'सेव करें',cancel:'रद्द करें',send:'भेजें',clearChat:'चैट साफ करें',exportSchedule:'समय-सारणी और तारीखें निर्यात करें',exportBackup:'डेटा बैकअप निर्यात करें',importBackup:'डेटा बैकअप आयात करें',close:'बंद करें',dismiss:'छिपाएँ'},
+  empty:{startBySubject:'पहले विषय जोड़ें',startBySubjectBody:'कक्षाएँ, असाइनमेंट और परीक्षाएँ बनाने के लिए पहले अपने विषय जोड़ें।',noSubjectsYet:'अभी कोई विषय नहीं',noSubjectsBody:'+ दबाकर पहला विषय जोड़ें।',nothingUrgent:'आज कुछ जरूरी नहीं'},
+  errors:{...translations.en.errors},
+  chat:{title:'Study Assistant',placeholder:'अपने study assistant से पूछें...',typing:'टाइप कर रहा है...',rateLimitWarning:'आप मुफ्त दैनिक सीमा के करीब हो सकते हैं',clearConfirm:'पूरी चैट हिस्ट्री साफ करें?',geminiKeyNote:'आपकी Gemini key केवल आपके ब्राउज़र में locally save होती है।',openSettings:'सेटिंग्स खोलें'},
+  guard:{addSubjectFirst:'पहले विषय जोड़ें'},
+  priority:{high:'उच्च प्राथमिकता',medium:'मध्यम प्राथमिकता',low:'कम प्राथमिकता'},
+  overview:{title:'आज का सारांश',todaySessions:'आज की कक्षाएँ',upcomingExams:'आने वाली परीक्षाएँ',overdueAssignments:'देरी से असाइनमेंट',recommended:'सुझाया गया अगला कदम'},
+  settings:{geminiKey:'Gemini API Key',show:'दिखाएँ',hide:'छिपाएँ',dataMgmt:'डेटा प्रबंधन',appearance:'भाषा'},
+  schedule:{swipeHint:'पूरी समय-सारणी देखने के लिए स्वाइप करें'},
+  common:{today:'आज',tomorrow:'कल',days:'दिन',day:'दिन',overdue:'देरी से',noKey:'पहले Settings में Gemini API key जोड़ें'}
+};
 let currentLang=safeGetRaw('study_planner_lang','ar');
-if(currentLang!=='ar'&&currentLang!=='en')currentLang='ar';
+if(!LANGUAGE_OPTIONS[currentLang])currentLang='ar';
 let currentTheme=safeGetRaw('study_planner_theme','light');
 if(currentTheme!=='light'&&currentTheme!=='dark')currentTheme='light';
-function t(key){return key.split('.').reduce((o,k)=>o&&o[k],translations[currentLang])??key}
+function t(key){
+  const parts=key.split('.');
+  const val=parts.reduce((o,k)=>o&&o[k],translations[currentLang]);
+  if(val!=null)return val;
+  return parts.reduce((o,k)=>o&&o[k],translations.en)??key;
+}
 function applyTheme(){
   document.documentElement.dataset.theme=currentTheme;
   const btn=document.getElementById('theme-toggle');
@@ -1331,9 +1389,9 @@ function toggleTheme(){
   applyTheme();
 }
 function applyLangToDocument(){
-  document.documentElement.dir=currentLang==='ar'?'rtl':'ltr';
+  document.documentElement.dir=LANGUAGE_OPTIONS[currentLang]?.dir||'ltr';
   document.documentElement.lang=currentLang;
-  const lt=document.getElementById('lang-toggle');if(lt)lt.textContent=currentLang==='ar'?'EN':'ع';
+  const lt=document.getElementById('lang-toggle');if(lt)lt.value=currentLang;
   // nav labels
   const navBtns=document.querySelectorAll('.bnav .ni');
   const keys=['dashboard','schedule','subjects','settings'];
@@ -1355,11 +1413,17 @@ function applyLangToDocument(){
   const bc=document.getElementById('btn-chat');if(bc)bc.setAttribute('aria-label',t('chat.title'));
   applyTheme();
 }
-function toggleLang(){
-  currentLang=currentLang==='ar'?'en':'ar';
+function setLang(lang){
+  if(!LANGUAGE_OPTIONS[lang])lang='ar';
+  currentLang=lang;
   safeSetRaw('study_planner_lang',currentLang);
   applyLangToDocument();
   rerenderAll();
+}
+function toggleLang(){
+  const keys=Object.keys(LANGUAGE_OPTIONS);
+  const next=keys[(keys.indexOf(currentLang)+1)%keys.length]||'ar';
+  setLang(next);
 }
 function rerenderAll(){
   try{updateTopbarDate&&updateTopbarDate()}catch{}
@@ -1513,7 +1577,7 @@ function dismissSchedHint(btn){safeSetRaw('schedule_hint_seen','1');btn.closest(
 
 /* ---- Schedule export (printable) ---- */
 function exportSchedulePrintable(){
-  const lang=currentLang;const dir=lang==='ar'?'rtl':'ltr';
+  const lang=currentLang;const dir=LANGUAGE_OPTIONS[lang]?.dir||'ltr';
   const dayLabels=lang==='ar'?DAYS_AR:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const today=startOfDay(new Date());
   const todayStr=today.toISOString().split('T')[0];
@@ -1577,7 +1641,7 @@ renderSettings=function(){
   extra.className='card';
   extra.innerHTML=`
     <div class="card-title">${esc(t('settings.appearance'))}</div>
-    <div class="srow"><span class="slabel">Language / اللغة</span><button class="btn btn-s" onclick="toggleLang()">${currentLang==='ar'?'English':'العربية'}</button></div>
+    <div class="srow"><span class="slabel">Language / اللغة</span><select class="fsel" onchange="setLang(this.value)">${Object.entries(LANGUAGE_OPTIONS).map(([code,info])=>`<option value="${code}" ${code===currentLang?'selected':''}>${info.label}</option>`).join('')}</select></div>
     <div class="card-title" style="margin-top:14px">${esc(t('settings.dataMgmt'))}</div>
     <div class="srow"><span class="slabel">${esc(t('actions.exportBackup'))}</span><button class="btn btn-s" onclick="exportBackupV3()">${esc(t('actions.exportBackup'))}</button></div>
     <div class="srow"><span class="slabel">${esc(t('actions.exportSchedule'))}</span><button class="btn btn-s" onclick="exportSchedulePrintable()">${esc(t('actions.exportSchedule'))}</button></div>
@@ -1617,14 +1681,14 @@ function renderChatMessage(m){
 }
 function buildSystemPrompt(){
   const today=new Date();const iso=today.toISOString().split('T')[0];
-  const day=today.toLocaleDateString(currentLang==='ar'?'ar-SA':'en-US',{weekday:'long'});
+  const day=today.toLocaleDateString(LANGUAGE_OPTIONS[currentLang]?.locale||'en-US',{weekday:'long'});
   const subjects=D.subjects||[];const assignments=(D.assignments||[]).filter(a=>!a.completed);
   const exams=D.exams||[];const sessions=D.classes||[];
   const subjectNames=subjects.map(s=>currentLang==='ar'?s.nameAr:s.nameEn).join(', ');
   const next14=exams.filter(e=>{const diff=(new Date(e.date)-today)/86400000;return diff>=0&&diff<=14}).map(e=>`${subjectName(e.subjectId)} — ${e.date}`).join('\n');
   const pending=assignments.map(a=>`${a.title} — ${subjectName(a.subjectId)} — ${a.due}`).join('\n');
   const thisWeek=sessions.map(s=>`${subjectName(s.subjectId)} — days ${(s.days||[]).join(',')} — ${s.startTime}`).join('\n');
-  return `You are a study assistant embedded in a bilingual (Arabic/English) study planner app.\nToday: ${iso} (${day}).\nActive language: ${currentLang}.\n\nStudent's subjects: ${subjectNames||'none'}.\nUpcoming exams (next 14 days):\n${next14||'none'}\nPending assignments:\n${pending||'none'}\nThis week's sessions:\n${thisWeek||'none'}\n\nHelp the student plan, prioritize, and learn. You can:\n- suggest study schedules based on workload and deadlines\n- recommend what to study first\n- explain study techniques and break down assignments\n- answer general academic questions\n\nRules:\n- Reply in the same language the user wrote in.\n- Be concise, practical, and supportive.\n- Do not invent data not provided above.\n- Do not claim to modify the planner — you can only suggest.`;
+  return `You are a study assistant embedded in a multilingual study planner app.\nToday: ${iso} (${day}).\nActive language: ${LANGUAGE_OPTIONS[currentLang]?.assistant||currentLang}.\n\nStudent's subjects: ${subjectNames||'none'}.\nUpcoming exams (next 14 days):\n${next14||'none'}\nPending assignments:\n${pending||'none'}\nThis week's sessions:\n${thisWeek||'none'}\n\nHelp the student plan, prioritize, and learn. You can:\n- suggest study schedules based on workload and deadlines\n- recommend what to study first\n- explain study techniques and break down assignments\n- answer general academic questions\n\nRules:\n- Reply in the same language the user wrote in.\n- Be concise, practical, and supportive.\n- Do not invent data not provided above.\n- Do not claim to modify the planner — you can only suggest.`;
 }
 async function callGemini(userMessage,history){
   const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),20000);
@@ -1684,6 +1748,96 @@ document.addEventListener('keydown',e=>{
   const open=Array.from(document.querySelectorAll('.modal-ov.open'));
   if(open.length){cm(open[open.length-1].id)}
 });
+
+
+
+/* ---- Full interface language patch ---- */
+const UI_TEXT={
+  ar:{
+    appTitle:'مخطط المذاكرة',addNew:'إضافة جديد',newSubject:'مادة جديدة',class:'حصة',assignment:'واجب',exam:'اختبار',addSubject:'إضافة مادة',editSubject:'تعديل المادة',subjectNameAr:'اسم المادة (عربي)',subjectNameEn:'Subject name (English)',subjectColor:'لون المادة',difficulty:'مستوى الصعوبة',gradeComponents:'مكونات الدرجة',addComponent:'+ إضافة مكوّن',saveSubject:'حفظ المادة',addClass:'إضافة حصة',subject:'المادة',days:'الأيام',from:'من',to:'إلى',roomOptional:'القاعة (اختياري)',save:'حفظ',addAssignment:'إضافة واجب',assignmentTitle:'عنوان الواجب',dueDate:'تاريخ التسليم',dateHelpAssign:'يقبل التاريخ الميلادي أو الهجري، وسيُحفظ داخليًا للتقويم.',addExam:'إضافة اختبار',date:'التاريخ',time:'الوقت',dateHelp:'يقبل التاريخ الميلادي أو الهجري.',addCommit:'إضافة التزام يومي',type:'النوع',exercise:'رياضة',work:'عمل',other:'أخرى',name:'الاسم',dashboard:'لوحة التحكم',weeklySchedule:'الجدول الأسبوعي',subjectsPage:'المواد الدراسية',settings:'الإعدادات',startAddingSubjects:'ابدأ بإضافة مواد',tapAdd:'اضغط + لإضافة موادك ومواعيدك',upcomingAssignments:'واجبات قادمة',exams:'اختبارات',freeHoursToday:'ساعات فراغ اليوم',weeksLeft:'أسابيع متبقية',semester:'الفصل الدراسي',addSemesterDates:'أضف تاريخ بداية ونهاية الفصل',todayClasses:'حصص اليوم',studyPlan:'اذاكر اليوم',busyDay:'يومك مزدحم أو لا توجد مهام قريبة — رتّب بكرة وخذ نفسًا قصيرًا',urgent:'عاجل',soon:'قريب',flexible:'مرن',starts:'يبدأ',minutes:'دق',aiStudySchedule:'جدول المذاكرة بالذكاء الاصطناعي',savedItems:'عناصر محفوظة',generatePlan:'إنشاء خطة',clearPlan:'مسح الخطة',swipeHint:'اسحب للجانب لرؤية كامل الجدول',noSubjects:'لا توجد مواد بعد',tapFirstSubject:'اضغط على + لإضافة أول مادة.',outOf100:'من 100',gradeBreakdown:'مكونات الدرجة',edit:'تعديل',deleteSubject:'حذف المادة',deleteSubjectConfirm:'حذف هذه المادة وكل بياناتها؟',sleepFocus:'النوم والتركيز',sleepTime:'وقت النوم',wakeTime:'وقت الاستيقاظ',bestFocus:'أفضل وقت تركيز',semesterDates:'تواريخ الفصل الدراسي',semesterStart:'بداية الفصل',semesterEnd:'نهاية الفصل',gregOrHijri:'ميلادي أو هجري',dataManagement:'إدارة البيانات',exportDataTitle:'تصدير البيانات',exportDataBody:'حفظ نسخة احتياطية JSON',importDataTitle:'استيراد البيانات',importDataBody:'دمج الحقول الناقصة مع القيم الافتراضية',resetAll:'إعادة ضبط كاملة',resetAllData:'إعادة ضبط البيانات',dailyCommitments:'الالتزامات اليومية',add:'+ إضافة',noCommitments:'لا توجد التزامات مضافة',language:'اللغة',appearance:'المظهر',darkMode:'الوضع الداكن',lightMode:'الوضع الفاتح',placeholderSubjectAr:'مثال: تحليل خوارزميات',placeholderSubjectEn:'e.g. Algorithm Analysis',placeholderRoom:'D201',placeholderAssignment:'مثال: واجب الفصل الثالث',placeholderExamRoom:'قاعة A1',placeholderCommit:'اسم الالتزام'},
+  en:{
+    appTitle:'Study Planner',addNew:'Add New',newSubject:'New Subject',class:'Class',assignment:'Assignment',exam:'Exam',addSubject:'Add Subject',editSubject:'Edit Subject',subjectNameAr:'Subject name (Arabic)',subjectNameEn:'Subject name (English)',subjectColor:'Subject color',difficulty:'Difficulty level',gradeComponents:'Grade components',addComponent:'+ Add component',saveSubject:'Save subject',addClass:'Add Class',subject:'Subject',days:'Days',from:'From',to:'To',roomOptional:'Room (optional)',save:'Save',addAssignment:'Add Assignment',assignmentTitle:'Assignment title',dueDate:'Due date',dateHelpAssign:'Gregorian or Hijri date is accepted and saved internally for the calendar.',addExam:'Add Exam',date:'Date',time:'Time',dateHelp:'Gregorian or Hijri date is accepted.',addCommit:'Add Daily Commitment',type:'Type',exercise:'Exercise',work:'Work',other:'Other',name:'Name',dashboard:'Dashboard',weeklySchedule:'Weekly Schedule',subjectsPage:'Subjects',settings:'Settings',startAddingSubjects:'Start by adding subjects',tapAdd:'Tap + to add your subjects and schedule.',upcomingAssignments:'Upcoming assignments',exams:'Exams',freeHoursToday:'Free hours today',weeksLeft:'Weeks left',semester:'Semester',addSemesterDates:'Add semester start and end dates',todayClasses:"Today's Classes",studyPlan:'Study Plan',busyDay:'Your day is busy or there are no nearby tasks — plan tomorrow and take a short break.',urgent:'Urgent',soon:'Soon',flexible:'Flexible',starts:'starts',minutes:'min',aiStudySchedule:'AI Study Schedule',savedItems:'saved items',generatePlan:'Generate plan',clearPlan:'Clear plan',swipeHint:'Swipe sideways to see the full schedule',noSubjects:'No subjects yet',tapFirstSubject:'Tap + to add your first subject.',outOf100:'Out of 100',gradeBreakdown:'Grade Breakdown',edit:'Edit',deleteSubject:'Delete subject',deleteSubjectConfirm:'Delete this subject and all its data?',sleepFocus:'Sleep & Focus',sleepTime:'Sleep time',wakeTime:'Wake-up time',bestFocus:'Best focus time',semesterDates:'Semester Dates',semesterStart:'Semester start',semesterEnd:'Semester end',gregOrHijri:'Gregorian or Hijri',dataManagement:'Data Management',exportDataTitle:'Export data',exportDataBody:'Save a JSON backup',importDataTitle:'Import data',importDataBody:'Merge missing fields with defaults',resetAll:'Full reset',resetAllData:'Reset all data',dailyCommitments:'Daily Commitments',add:'+ Add',noCommitments:'No commitments added',language:'Language',appearance:'Appearance',darkMode:'Dark mode',lightMode:'Light mode',placeholderSubjectAr:'e.g. Algorithm Analysis',placeholderSubjectEn:'e.g. Algorithm Analysis',placeholderRoom:'D201',placeholderAssignment:'e.g. Chapter 3 assignment',placeholderExamRoom:'Room A1',placeholderCommit:'Commitment name'},
+  es:{
+    appTitle:'Planificador de estudio',addNew:'Agregar nuevo',newSubject:'Nueva materia',class:'Clase',assignment:'Tarea',exam:'Examen',addSubject:'Agregar materia',editSubject:'Editar materia',subjectNameAr:'Nombre de la materia (árabe)',subjectNameEn:'Nombre de la materia (inglés)',subjectColor:'Color de la materia',difficulty:'Nivel de dificultad',gradeComponents:'Componentes de la nota',addComponent:'+ Agregar componente',saveSubject:'Guardar materia',addClass:'Agregar clase',subject:'Materia',days:'Días',from:'Desde',to:'Hasta',roomOptional:'Aula (opcional)',save:'Guardar',addAssignment:'Agregar tarea',assignmentTitle:'Título de la tarea',dueDate:'Fecha de entrega',dateHelpAssign:'Se acepta fecha gregoriana o hijri y se guarda internamente para el calendario.',addExam:'Agregar examen',date:'Fecha',time:'Hora',dateHelp:'Se acepta fecha gregoriana o hijri.',addCommit:'Agregar compromiso diario',type:'Tipo',exercise:'Ejercicio',work:'Trabajo',other:'Otro',name:'Nombre',dashboard:'Panel',weeklySchedule:'Horario semanal',subjectsPage:'Materias',settings:'Ajustes',startAddingSubjects:'Empieza agregando materias',tapAdd:'Pulsa + para agregar materias y horarios.',upcomingAssignments:'Tareas próximas',exams:'Exámenes',freeHoursToday:'Horas libres hoy',weeksLeft:'Semanas restantes',semester:'Semestre',addSemesterDates:'Agrega inicio y fin del semestre',todayClasses:'Clases de hoy',studyPlan:'Plan de estudio',busyDay:'Tu día está ocupado o no hay tareas cercanas; planifica mañana y toma un breve descanso.',urgent:'Urgente',soon:'Pronto',flexible:'Flexible',starts:'empieza',minutes:'min',aiStudySchedule:'Horario de estudio con IA',savedItems:'elementos guardados',generatePlan:'Generar plan',clearPlan:'Borrar plan',swipeHint:'Desliza para ver todo el horario',noSubjects:'Aún no hay materias',tapFirstSubject:'Pulsa + para agregar tu primera materia.',outOf100:'De 100',gradeBreakdown:'Desglose de notas',edit:'Editar',deleteSubject:'Eliminar materia',deleteSubjectConfirm:'¿Eliminar esta materia y todos sus datos?',sleepFocus:'Sueño y concentración',sleepTime:'Hora de dormir',wakeTime:'Hora de despertar',bestFocus:'Mejor hora de concentración',semesterDates:'Fechas del semestre',semesterStart:'Inicio del semestre',semesterEnd:'Fin del semestre',gregOrHijri:'Gregoriano o hijri',dataManagement:'Gestión de datos',exportDataTitle:'Exportar datos',exportDataBody:'Guardar copia JSON',importDataTitle:'Importar datos',importDataBody:'Combinar campos faltantes con valores predeterminados',resetAll:'Restablecimiento completo',resetAllData:'Restablecer datos',dailyCommitments:'Compromisos diarios',add:'+ Agregar',noCommitments:'No hay compromisos agregados',language:'Idioma',appearance:'Apariencia',darkMode:'Modo oscuro',lightMode:'Modo claro',placeholderSubjectAr:'p. ej., Análisis de algoritmos',placeholderSubjectEn:'e.g. Algorithm Analysis',placeholderRoom:'D201',placeholderAssignment:'p. ej., Tarea del capítulo 3',placeholderExamRoom:'Aula A1',placeholderCommit:'Nombre del compromiso'},
+  'pt-BR':{
+    appTitle:'Planejador de estudos',addNew:'Adicionar novo',newSubject:'Nova matéria',class:'Aula',assignment:'Tarefa',exam:'Prova',addSubject:'Adicionar matéria',editSubject:'Editar matéria',subjectNameAr:'Nome da matéria (árabe)',subjectNameEn:'Nome da matéria (inglês)',subjectColor:'Cor da matéria',difficulty:'Nível de dificuldade',gradeComponents:'Componentes da nota',addComponent:'+ Adicionar componente',saveSubject:'Salvar matéria',addClass:'Adicionar aula',subject:'Matéria',days:'Dias',from:'De',to:'Até',roomOptional:'Sala (opcional)',save:'Salvar',addAssignment:'Adicionar tarefa',assignmentTitle:'Título da tarefa',dueDate:'Data de entrega',dateHelpAssign:'Data gregoriana ou hijri é aceita e salva internamente no calendário.',addExam:'Adicionar prova',date:'Data',time:'Hora',dateHelp:'Data gregoriana ou hijri é aceita.',addCommit:'Adicionar compromisso diário',type:'Tipo',exercise:'Exercício',work:'Trabalho',other:'Outro',name:'Nome',dashboard:'Painel',weeklySchedule:'Agenda semanal',subjectsPage:'Matérias',settings:'Configurações',startAddingSubjects:'Comece adicionando matérias',tapAdd:'Toque em + para adicionar matérias e horários.',upcomingAssignments:'Tarefas próximas',exams:'Provas',freeHoursToday:'Horas livres hoje',weeksLeft:'Semanas restantes',semester:'Semestre',addSemesterDates:'Adicione as datas de início e fim do semestre',todayClasses:'Aulas de hoje',studyPlan:'Plano de estudo',busyDay:'Seu dia está cheio ou não há tarefas próximas — planeje amanhã e faça uma breve pausa.',urgent:'Urgente',soon:'Em breve',flexible:'Flexível',starts:'começa',minutes:'min',aiStudySchedule:'Agenda de estudo com IA',savedItems:'itens salvos',generatePlan:'Gerar plano',clearPlan:'Limpar plano',swipeHint:'Deslize para ver toda a agenda',noSubjects:'Ainda não há matérias',tapFirstSubject:'Toque em + para adicionar sua primeira matéria.',outOf100:'De 100',gradeBreakdown:'Detalhamento da nota',edit:'Editar',deleteSubject:'Excluir matéria',deleteSubjectConfirm:'Excluir esta matéria e todos os dados dela?',sleepFocus:'Sono e foco',sleepTime:'Hora de dormir',wakeTime:'Hora de acordar',bestFocus:'Melhor horário de foco',semesterDates:'Datas do semestre',semesterStart:'Início do semestre',semesterEnd:'Fim do semestre',gregOrHijri:'Gregoriano ou hijri',dataManagement:'Gerenciamento de dados',exportDataTitle:'Exportar dados',exportDataBody:'Salvar backup JSON',importDataTitle:'Importar dados',importDataBody:'Mesclar campos ausentes com padrões',resetAll:'Redefinição completa',resetAllData:'Redefinir dados',dailyCommitments:'Compromissos diários',add:'+ Adicionar',noCommitments:'Nenhum compromisso adicionado',language:'Idioma',appearance:'Aparência',darkMode:'Modo escuro',lightMode:'Modo claro',placeholderSubjectAr:'ex.: Análise de algoritmos',placeholderSubjectEn:'e.g. Algorithm Analysis',placeholderRoom:'D201',placeholderAssignment:'ex.: Tarefa do capítulo 3',placeholderExamRoom:'Sala A1',placeholderCommit:'Nome do compromisso'},
+  hi:{
+    appTitle:'स्टडी प्लानर',addNew:'नया जोड़ें',newSubject:'नया विषय',class:'कक्षा',assignment:'असाइनमेंट',exam:'परीक्षा',addSubject:'विषय जोड़ें',editSubject:'विषय संपादित करें',subjectNameAr:'विषय का नाम (अरबी)',subjectNameEn:'विषय का नाम (अंग्रेज़ी)',subjectColor:'विषय का रंग',difficulty:'कठिनाई स्तर',gradeComponents:'ग्रेड घटक',addComponent:'+ घटक जोड़ें',saveSubject:'विषय सेव करें',addClass:'कक्षा जोड़ें',subject:'विषय',days:'दिन',from:'से',to:'तक',roomOptional:'कक्ष (वैकल्पिक)',save:'सेव करें',addAssignment:'असाइनमेंट जोड़ें',assignmentTitle:'असाइनमेंट शीर्षक',dueDate:'जमा करने की तारीख',dateHelpAssign:'ग्रेगोरियन या हिजरी तारीख स्वीकार की जाती है और कैलेंडर के लिए सेव होती है।',addExam:'परीक्षा जोड़ें',date:'तारीख',time:'समय',dateHelp:'ग्रेगोरियन या हिजरी तारीख स्वीकार की जाती है।',addCommit:'दैनिक प्रतिबद्धता जोड़ें',type:'प्रकार',exercise:'व्यायाम',work:'काम',other:'अन्य',name:'नाम',dashboard:'डैशबोर्ड',weeklySchedule:'साप्ताहिक समय-सारणी',subjectsPage:'विषय',settings:'सेटिंग्स',startAddingSubjects:'विषय जोड़कर शुरू करें',tapAdd:'+ दबाकर विषय और समय जोड़ें।',upcomingAssignments:'आने वाले असाइनमेंट',exams:'परीक्षाएँ',freeHoursToday:'आज के खाली घंटे',weeksLeft:'बचे हुए सप्ताह',semester:'सेमेस्टर',addSemesterDates:'सेमेस्टर की शुरुआत और अंत की तारीखें जोड़ें',todayClasses:'आज की कक्षाएँ',studyPlan:'अध्ययन योजना',busyDay:'आपका दिन व्यस्त है या नज़दीकी कार्य नहीं हैं — कल की योजना बनाएं और थोड़ा आराम करें।',urgent:'तुरंत',soon:'जल्द',flexible:'लचीला',starts:'शुरू',minutes:'मिनट',aiStudySchedule:'AI अध्ययन समय-सारणी',savedItems:'सेव आइटम',generatePlan:'योजना बनाएं',clearPlan:'योजना साफ करें',swipeHint:'पूरी समय-सारणी देखने के लिए साइड में स्वाइप करें',noSubjects:'अभी कोई विषय नहीं',tapFirstSubject:'+ दबाकर पहला विषय जोड़ें।',outOf100:'100 में से',gradeBreakdown:'ग्रेड विवरण',edit:'संपादित करें',deleteSubject:'विषय हटाएँ',deleteSubjectConfirm:'इस विषय और उसका सारा डेटा हटाएँ?',sleepFocus:'नींद और फोकस',sleepTime:'सोने का समय',wakeTime:'जागने का समय',bestFocus:'सबसे अच्छा फोकस समय',semesterDates:'सेमेस्टर की तारीखें',semesterStart:'सेमेस्टर शुरुआत',semesterEnd:'सेमेस्टर अंत',gregOrHijri:'ग्रेगोरियन या हिजरी',dataManagement:'डेटा प्रबंधन',exportDataTitle:'डेटा निर्यात करें',exportDataBody:'JSON बैकअप सेव करें',importDataTitle:'डेटा आयात करें',importDataBody:'छूटे हुए फ़ील्ड को डिफ़ॉल्ट से मिलाएँ',resetAll:'पूर्ण रीसेट',resetAllData:'सारा डेटा रीसेट करें',dailyCommitments:'दैनिक प्रतिबद्धताएँ',add:'+ जोड़ें',noCommitments:'कोई प्रतिबद्धता नहीं जोड़ी गई',language:'भाषा',appearance:'दिखावट',darkMode:'डार्क मोड',lightMode:'लाइट मोड',placeholderSubjectAr:'जैसे: Algorithm Analysis',placeholderSubjectEn:'e.g. Algorithm Analysis',placeholderRoom:'D201',placeholderAssignment:'जैसे: Chapter 3 assignment',placeholderExamRoom:'कक्ष A1',placeholderCommit:'प्रतिबद्धता का नाम'}
+};
+const UI_KEY_BY_AR={
+  'مخطط المذاكرة':'appTitle','إضافة جديد':'addNew','مادة جديدة':'newSubject','حصة':'class','واجب':'assignment','اختبار':'exam','إضافة مادة':'addSubject','اسم المادة (عربي)':'subjectNameAr','Subject name (English)':'subjectNameEn','لون المادة':'subjectColor','مستوى الصعوبة':'difficulty','مكونات الدرجة':'gradeComponents','+ إضافة مكوّن':'addComponent','حفظ المادة':'saveSubject','إضافة حصة':'addClass','المادة':'subject','الأيام':'days','من':'from','إلى':'to','القاعة (اختياري)':'roomOptional','حفظ':'save','إضافة واجب':'addAssignment','عنوان الواجب':'assignmentTitle','تاريخ التسليم':'dueDate','يقبل التاريخ الميلادي أو الهجري، وسيُحفظ داخليًا للتقويم.':'dateHelpAssign','إضافة اختبار':'addExam','التاريخ':'date','الوقت':'time','يقبل التاريخ الميلادي أو الهجري.':'dateHelp','إضافة التزام يومي':'addCommit','النوع':'type','رياضة':'exercise','عمل':'work','أخرى':'other','الاسم':'name','لوحة التحكم':'dashboard','الجدول الأسبوعي':'weeklySchedule','المواد الدراسية':'subjectsPage','الإعدادات':'settings','ابدأ بإضافة مواد':'startAddingSubjects','اضغط + لإضافة موادك ومواعيدك':'tapAdd','واجبات قادمة':'upcomingAssignments','اختبارات':'exams','ساعات فراغ اليوم':'freeHoursToday','أسابيع متبقية':'weeksLeft','الفصل الدراسي':'semester','أضف تاريخ بداية ونهاية الفصل':'addSemesterDates','حصص اليوم':'todayClasses','حصص اليوم | Today\'s Classes':'todayClasses','اذاكر اليوم':'studyPlan','اذاكر اليوم | Study Plan':'studyPlan',' يومك مزدحم أو لا توجد مهام قريبة — رتّب بكرة وخذ نفسًا قصيرًا':'busyDay','يومك مزدحم أو لا توجد مهام قريبة — رتّب بكرة وخذ نفسًا قصيرًا':'busyDay','عاجل':'urgent','قريب':'soon','مرن':'flexible','AI Study Schedule':'aiStudySchedule','لا توجد مواد بعد':'noSubjects','اضغط على + لإضافة أول مادة.':'tapFirstSubject','من 100 | Out of 100':'outOf100','مكونات الدرجة | Grade Breakdown':'gradeBreakdown','تعديل':'edit','حذف المادة':'deleteSubject','النوم والتركيز | Sleep & Focus':'sleepFocus','وقت النوم':'sleepTime','وقت الاستيقاظ ️':'wakeTime','أفضل وقت تركيز':'bestFocus','تواريخ الفصل الدراسي':'semesterDates','بداية الفصل':'semesterStart','نهاية الفصل':'semesterEnd','ميلادي أو هجري':'gregOrHijri','إدارة البيانات':'dataManagement','تصدير البيانات':'exportDataTitle','حفظ نسخة احتياطية JSON':'exportDataBody','استيراد البيانات':'importDataTitle','دمج الحقول الناقصة مع القيم الافتراضية':'importDataBody','إعادة ضبط كاملة':'resetAll','Reset all data':'resetAllData','الالتزامات اليومية | Daily Commitments':'dailyCommitments','+ إضافة':'add','لا توجد التزامات مضافة':'noCommitments','Language / اللغة':'language','اللغة':'language','المظهر':'appearance','الوضع الداكن':'darkMode','الوضع الفاتح':'lightMode'
+};
+const UI_KEY_BY_EN={
+  'Study Planner':'appTitle','Add New':'addNew','New Subject':'newSubject','Class':'class','Assignment':'assignment','Exam':'exam','Add Subject':'addSubject','Edit Subject':'editSubject','Subject name (Arabic)':'subjectNameAr','Subject name (English)':'subjectNameEn','Subject color':'subjectColor','Difficulty level':'difficulty','Grade components':'gradeComponents','+ Add component':'addComponent','Save subject':'saveSubject','Add Class':'addClass','Subject':'subject','Days':'days','From':'from','To':'to','Room (optional)':'roomOptional','Save':'save','Add Assignment':'addAssignment','Assignment title':'assignmentTitle','Due date':'dueDate','Add Exam':'addExam','Date':'date','Time':'time','Add Daily Commitment':'addCommit','Type':'type','Exercise':'exercise','Work':'work','Other':'other','Name':'name','Dashboard':'dashboard','Weekly Schedule':'weeklySchedule','Subjects':'subjectsPage','Settings':'settings','Start by adding subjects':'startAddingSubjects','Tap + to add your subjects and schedule.':'tapAdd','Upcoming assignments':'upcomingAssignments','Exams':'exams','Free hours today':'freeHoursToday','Weeks left':'weeksLeft','Semester':'semester',"Today's Classes":'todayClasses','Study Plan':'studyPlan','Urgent':'urgent','Soon':'soon','Flexible':'flexible','AI Study Schedule':'aiStudySchedule','No subjects yet':'noSubjects','Tap + to add your first subject.':'tapFirstSubject','Out of 100':'outOf100','Grade Breakdown':'gradeBreakdown','Edit':'edit','Delete subject':'deleteSubject','Sleep & Focus':'sleepFocus','Sleep time':'sleepTime','Wake-up time':'wakeTime','Best focus time':'bestFocus','Semester Dates':'semesterDates','Semester start':'semesterStart','Semester end':'semesterEnd','Gregorian or Hijri':'gregOrHijri','Data Management':'dataManagement','Export data':'exportDataTitle','Import data':'importDataTitle','Full reset':'resetAll','Reset all data':'resetAllData','Daily Commitments':'dailyCommitments','+ Add':'add','No commitments added':'noCommitments','Language':'language','Appearance':'appearance','Dark mode':'darkMode','Light mode':'lightMode'
+};
+function ui(key){return (UI_TEXT[currentLang]&&UI_TEXT[currentLang][key])||(UI_TEXT.en&&UI_TEXT.en[key])||key}
+function localizeTextValue(txt){
+  const raw=String(txt??'');
+  const trimmed=raw.trim();
+  if(!trimmed)return raw;
+  const key=UI_KEY_BY_AR[trimmed]||UI_KEY_BY_EN[trimmed];
+  if(key)return raw.replace(trimmed,ui(key));
+  const dayFull={ar:['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'],en:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],es:['domingo','lunes','martes','miércoles','jueves','viernes','sábado'],'pt-BR':['domingo','segunda','terça','quarta','quinta','sexta','sábado'],hi:['रविवार','सोमवार','मंगलवार','बुधवार','गुरुवार','शुक्रवार','शनिवार']};
+  const dayShort={ar:['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'],en:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],es:['dom','lun','mar','mié','jue','vie','sáb'],'pt-BR':['dom','seg','ter','qua','qui','sex','sáb'],hi:['रवि','सोम','मंगल','बुध','गुरु','शुक्र','शनि']};
+  let i=dayFull.ar.indexOf(trimmed);if(i>=0)return raw.replace(trimmed,dayFull[currentLang]?.[i]||dayFull.en[i]);
+  i=dayShort.ar.indexOf(trimmed);if(i>=0)return raw.replace(trimmed,dayShort[currentLang]?.[i]||dayShort.en[i]);
+  return raw;
+}
+function localizeDynamicText(txt){
+  let out=localizeTextValue(txt);
+  if(currentLang==='ar')return out;
+  out=out.replace(/(\d+)\s*أيام/g,(m,n)=>`${n} ${ui('days')||t('common.days')}`);
+  out=out.replace(/(\d+)\s*دق/g,(m,n)=>`${n} ${ui('minutes')}`);
+  out=out.replace(/يبدأ\s*/g,ui('starts')+' ');
+  out=out.replace(/غداً|غدًا/g,t('common.tomorrow'));
+  out=out.replace(/اليوم/g,t('common.today'));
+  out=out.replace(/واجب/g,ui('assignment'));
+  out=out.replace(/اختبار/g,ui('exam'));
+  out=out.replace(/مذاكرة/g,ui('studyPlan'));
+  out=out.replace(/عاجل/g,ui('urgent')).replace(/قريب/g,ui('soon')).replace(/مرن/g,ui('flexible'));
+  out=out.replace(/تم حذف المادة/g,currentLang==='hi'?'विषय हटाया गया':currentLang==='es'?'Materia eliminada':currentLang==='pt-BR'?'Matéria excluída':'Subject deleted');
+  return out;
+}
+function localizeAll(root=document){
+  try{
+    document.title=ui('appTitle')+' | Study Planner';
+    document.documentElement.dir=LANGUAGE_OPTIONS[currentLang]?.dir||'ltr';
+    document.documentElement.lang=currentLang;
+    const walker=document.createTreeWalker(root.body||root,NodeFilter.SHOW_TEXT,{acceptNode(node){
+      const p=node.parentElement;
+      if(!p||['SCRIPT','STYLE','TEXTAREA'].includes(p.tagName))return NodeFilter.FILTER_REJECT;
+      return node.nodeValue.trim()?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;
+    }});
+    const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+    nodes.forEach(n=>{n.nodeValue=localizeDynamicText(n.nodeValue)});
+    document.querySelectorAll('input[placeholder],textarea[placeholder]').forEach(el=>{
+      const ph=el.getAttribute('placeholder')||'';
+      const map={'مثال: تحليل خوارزميات':'placeholderSubjectAr','e.g. Algorithm Analysis':'placeholderSubjectEn','D201':'placeholderRoom','مثال: واجب الفصل الثالث':'placeholderAssignment','2026-05-04 أو 1447-11-17':null,'قاعة A1':'placeholderExamRoom','اسم الالتزام':'placeholderCommit'};
+      if(map[ph])el.setAttribute('placeholder',ui(map[ph]));
+    });
+    document.querySelectorAll('option').forEach(o=>{o.textContent=localizeDynamicText(o.textContent)});
+    const themeBtn=document.getElementById('theme-toggle');
+    if(themeBtn){themeBtn.title=currentTheme==='dark'?ui('lightMode'):ui('darkMode');themeBtn.setAttribute('aria-label',themeBtn.title)}
+  }catch(e){console.warn('localizeAll failed',e)}
+}
+function localizeModalTitlesAndControls(){localizeAll(document)}
+function wrapRenderForI18n(name){
+  const original=window[name];
+  if(typeof original!=='function'||original.__i18nWrapped)return;
+  window[name]=function(...args){const result=original.apply(this,args);localizeAll(document);return result};
+  window[name].__i18nWrapped=true;
+}
+['renderDash','renderSched','renderSubjs','renderSettings','openDetail','openAddClass','openAddAssignment','openAddExam','openAddCommitment','renderChatBody'].forEach(wrapRenderForI18n);
+const originalApplyLangToDocument=applyLangToDocument;
+applyLangToDocument=function(){originalApplyLangToDocument();localizeAll(document)};
+const originalToast=toast;
+toast=function(msg,type='info'){originalToast(localizeDynamicText(msg),type)};
+const originalConfirm=window.confirm.bind(window);
+window.confirm=function(message){return originalConfirm(localizeDynamicText(message))};
+const originalAlert=window.alert.bind(window);
+window.alert=function(message){return originalAlert(localizeDynamicText(message))};
+const originalPrompt=window.prompt.bind(window);
+window.prompt=function(message,def){return originalPrompt(localizeDynamicText(message),def)};
 
 /* ---- Init: migrations + lang + theme ---- */
 runMigrations();
